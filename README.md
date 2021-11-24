@@ -9,8 +9,8 @@
 
 
 ## Apoyo ✒️
- **Fernanda Palacios Vera** - [EveFer](https://github.com/EveFer)
- **Victor Torres** - [victortorres-dev](https://github.com/victortorres-dev)
+* **Fernanda Palacios Vera** - [EveFer](https://github.com/EveFer)
+* **Victor Torres** - [victortorres-dev](https://github.com/victortorres-dev)
 
 
 ## Gracias 🎁
