@@ -1,11 +1,11 @@
-const { request, response } = require("express");
 const express = require("express")
+
 const account = require("../usercases/account");
 
 const router = express.Router();
 
 //get
-router.get("/", async (request, response, next) => {
+router.get("/", async (req , res, next) => {
   const accounts = [];
   const { limit } = request.query;
 
