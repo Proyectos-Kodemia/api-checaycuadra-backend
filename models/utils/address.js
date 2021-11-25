@@ -7,11 +7,11 @@ const AddressSchema = new Schema({
       minlength: 1,
     },
     interiorNumber: { //numero interior
-      type: Int32,
+      type: Number,
       minlength: 1,
     },
     outdoorNumber: { //numero exterior
-      type: Int32,
+      type: Number,
       minlength: 1,
     },
     colonia: { //colonia
@@ -27,7 +27,7 @@ const AddressSchema = new Schema({
       minlength: 1,
     },
     cp: {
-      type: Int32,
+      type:Number,
       minlength: 1,
     },
   },{

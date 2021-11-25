@@ -7,8 +7,7 @@ const router = express.Router();
 //get
 router.get("/", async (req , res, next) => {
   const accounts = [];
-  const { limit } = request.query;
-
+  
   try {
     const accountGet = await account.get();
     response.json({
