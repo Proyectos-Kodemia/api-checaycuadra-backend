@@ -10,7 +10,7 @@ const schema = new Schema({
 		required: true,
 	  },
 	price: {
-		type: Int32,
+		type: Number,
 		required: true,
 	  },
 	description: {

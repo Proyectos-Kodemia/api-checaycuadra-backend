@@ -1,23 +1,31 @@
 const express = require("express");
+const config=require("./lib/config")
+const cors=require("cors")
 const app = express();
-const port = 8000;
+
 const apiRouter = require("./routes");
+
 const { logErrors, errorHandler } = require("./middlewares/errorHandlers");
 const authHandler = require("./middlewares/authHandlers");
+
+app.use(cors())
+
 const db = require("./lib/db");
+const port=config.app.port
+
 
 app.use(express.json());
 
-app.get("/", (request, response) => {
+app.get("/", (req, res) => {
   response.send("Hello World😊!");
 });
 
-app.use(authHandler)
+// app.use(authHandler)
 
-apiRouter(app);
+// apiRouter(app);
 
-app.use(logErrors);
-app.use(errorHandler);
+// app.use(logErrors);
+// app.use(errorHandler);
 
 
 

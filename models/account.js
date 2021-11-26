@@ -36,7 +36,7 @@ const schema = new Schema({
     minlength: 1,
   },
   telephone: {
-    type: Int32,
+    type: Number,
     minlength: 1,
   },
   degree: { //cedula
