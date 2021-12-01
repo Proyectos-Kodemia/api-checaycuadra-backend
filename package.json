@@ -32,5 +32,8 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "standard": "^16.0.4"
   }
 }
