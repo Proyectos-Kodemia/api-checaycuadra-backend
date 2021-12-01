@@ -14,11 +14,11 @@ const AddressSchema = new Schema({
     type: Number,
     minlength: 1
   },
-  colonia: { // colonia
+  district: { // colonia
     type: String,
     minlength: 1
   },
-  municipio: { // municipio
+  town: { // municipio
     type: Date,
     minlength: 1
   },

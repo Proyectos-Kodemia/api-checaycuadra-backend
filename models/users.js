@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const schema = new Schema({
   id: {
-    type: String,
+    type: String
   },
   username: {
     type: String,
@@ -11,39 +11,39 @@ const schema = new Schema({
     trim: true,
     maxlength: 25,
     minlength: 1,
-    unique: true,
+    unique: true
   },
   name: {
     type: String,
     required: true,
     trim: true,
-    minlength: 1,
+    minlength: 1
   },
   password: {
     type: String,
     required: true,
-    minlength: 1,
+    minlength: 1
   },
   email: {
     type: String,
     required: true,
-    minlength: 1,
+    minlength: 1
   },
   telephone: {
     type: Number,
-    minlength: 1,
+    minlength: 1
   },
   profileImage: {
-    type: String,
+    type: String
   },
   idMercadoPago: {
-    type: String,
+    type: String
   }
-},{
-	timestamp: true
-});
+}, {
+  timestamp: true
+})
 
 module.exports = {
-  model: mongoose.model("User", schema),
-  schema,
-};
+  model: mongoose.model('User', schema),
+  schema
+}

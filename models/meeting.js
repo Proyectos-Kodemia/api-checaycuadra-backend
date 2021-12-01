@@ -1,60 +1,52 @@
-const mongoose = require("mongoose");
-const DocumentSchema = require("./utils/documentos")
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const DocumentSchema = require('./utils/documentos')
+const { Schema } = mongoose
 
-const schema = new Schema({
-	user: {
-		 type: Schema.Types.ObjectId, ref: 'Usuario' 
-	},
-	userAccount: {
-		type: String,
-		required: true,
-		minlength: 1,
-	  },
-	Date: {
-		type: Date,
-		required: true,
-		minlength: 1,
-	  },
-	link: {
-		type: String,
-		required: true,
-		minlength: 1,
-	  },	
-	time: {
-		type: String,
-		required: true,
-		minlength: 1,
-	  },	
-	service: {
-		type: String,
-		required: true,
-		minlength: 1,
-	  },	
-	total: {
-		type: String,
-		required: false,
-		minlength: 1,
-	  },
-	documents: [DocumentSchema],
-	chat: {}
-},{
-	timestamp: true
-});
-
-
-// {
-// 	usuario: 'ObjectId(wereyy234565434re)',
-// 	hora: '',
-// 	fecha: '',
-// 	documents: [
-// 		{
-
-// 		}
-// 	]
-// }
+const schema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    userAccount: {
+      type: String,
+      required: true,
+      minlength: 1
+    },
+    Date: {
+      type: Date,
+      required: true,
+      minlength: 1
+    },
+    link: {
+      type: String,
+      required: true,
+      minlength: 1
+    },
+    time: {
+      type: String,
+      required: true,
+      minlength: 1
+    },
+    service: {
+      type: String,
+      required: true,
+      minlength: 1
+    },
+    total: {
+      type: String,
+      required: false,
+      minlength: 1
+    },
+    documents: [DocumentSchema],
+    chat: {}
+  },
+  {
+    timestamp: true
+  }
+)
 
 module.exports = {
-  model: mongoose.model("Cita", schema),
-  schema,
-};
+  model: mongoose.model('Meeting', schema),
+  schema
+}
