@@ -4,12 +4,6 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const schema = new Schema({
-  id: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1
-  },
   username: {
     type: String,
     required: true,
@@ -20,7 +14,6 @@ const schema = new Schema({
   },
   name: {
     type: String,
-    required: true,
     trim: true,
     minlength: 1
   },
