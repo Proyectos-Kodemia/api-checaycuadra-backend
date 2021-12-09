@@ -6,22 +6,21 @@ const create = async (dataUser) => {
   const { password, email } = dataUser
   const hash = await encrypt.hashPassword(password)
 
-  const user = new User.Model({ password: hash, email })
+  const user = new User.model({ password: hash, email })
   const savedUser = await user.save()
   return savedUser
 }
 
 const get = async () => {
-  return await User.Model.find({}).exec()
+  return await User.model.find({}).exec()
 }
 
 const getById = async (idUser) => {
-  return await User.Model.findById(idUser).exec()
+  return await User.model.findById(idUser).exec()
 }
 
-const getByUser = async (user) => {
-  console.log(user)
-  return await User.Model.findOne(user).exec()
+const getByEmail = async (email) => {
+  return await User.model.findOne(email).exec()
 }
 
 const authenticate = async (user, password) => {
@@ -30,8 +29,8 @@ const authenticate = async (user, password) => {
 }
 
 // Proceso LogIn de usuarios
-const logIn = async (username, password) => {
-  const userObject = await getByUser({ username })
+const logIn = async (email, password) => {
+  const userObject = await getByEmail({ email })
   const hash = userObject.password
   const isValid = await encrypt.verifyPassword(password, hash)
 
@@ -57,4 +56,4 @@ const del = async (userId) => {
   return await User.model.findByIdAndDelete(userId).exec()
 }
 
-module.exports = { create, get, getById, getByUser, authenticate, logIn, update, del }
+module.exports = { create, get, getById, getByEmail, authenticate, logIn, update, del }
