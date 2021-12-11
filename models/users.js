@@ -1,19 +1,21 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const schema = new Schema({
-  id: {
-    type: String
-  },
+const UserSchema = new Schema({
   username: {
     type: String,
     required: false,
     trim: true,
     maxlength: 25,
     minlength: 1
-
   },
   name: {
+    type: String,
+    required: false,
+    trim: true,
+    minlength: 1
+  },
+  lastName: { // Verificar si se agrega solo a contadores o también a usuarios
     type: String,
     required: false,
     trim: true,
@@ -30,6 +32,11 @@ const schema = new Schema({
     minlength: 1,
     unique: true
   },
+  role: {
+    type: String,
+    required: true,
+    minlength: 1
+  },
   telephone: {
     type: Number,
     minlength: 1
@@ -45,6 +52,6 @@ const schema = new Schema({
 })
 
 module.exports = {
-  model: mongoose.model('User', schema),
-  schema
+  model: mongoose.model('User', UserSchema),
+  UserSchema
 }

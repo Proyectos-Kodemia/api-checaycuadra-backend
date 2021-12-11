@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     res.status(401).json({
       ok: false,
-      message: 'Autentication Failed, Password or User name invalid'
+      message: 'Autentication , Password or User name invalid'
 
     })
     next(error)

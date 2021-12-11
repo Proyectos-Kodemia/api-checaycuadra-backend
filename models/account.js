@@ -1,15 +1,15 @@
-const AddressSchema = require("./utils/address")
-const ScheduleSchema = require("./utils/schedule")
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
-
+const AddressSchema = require('./utils/address')
+const ScheduleSchema = require('./utils/schedule')
+const mongoose = require('mongoose')
+const { UserSchema } = require('./users')
+const { Schema } = mongoose
 
 const schema = new Schema({
   id: {
     type: String,
     required: true,
     trim: true,
-    minlength: 1,
+    minlength: 1
   },
   username: {
     type: String,
@@ -17,48 +17,50 @@ const schema = new Schema({
     trim: true,
     maxlength: 25,
     minlength: 1,
-    unique: true,
+    unique: true
   },
   name: {
     type: String,
     required: true,
     trim: true,
-    minlength: 1,
+    minlength: 1
   },
   password: {
     type: String,
     required: true,
-    minlength: 1,
+    minlength: 1
   },
   email: {
     type: String,
     required: true,
-    minlength: 1,
+    minlength: 1
   },
   telephone: {
     type: Number,
-    minlength: 1,
+    minlength: 1
   },
-  degree: { //cedula
+  degree: { // cedula
     type: String,
-    minlength: 1,
+    minlength: 1
   },
-  profileImage: { //imagen perfil
-    type: String,
+  profileImage: { // imagen perfil
+    type: String
   },
   description: {
     type: String,
-    minlength: 1,
+    minlength: 1
   },
 
-  address: AddressSchema, //direccion
+  address: AddressSchema, // direccion
 
-  Schedule: ScheduleSchema, //horario
+  Schedule: ScheduleSchema, // horario
+
+  User: UserSchema
 }, {
   timestamp: true
-});
+})
 
 module.exports = {
-  model: mongoose.model("Account", schema),
-  schema,
-};
+  model: mongoose.model('Account', schema),
+  schema
+}

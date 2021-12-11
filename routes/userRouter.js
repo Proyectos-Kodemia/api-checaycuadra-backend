@@ -8,12 +8,12 @@ router.post('/', async (req, res, next) => {
   try {
     const userData = req.body
     const userCreated = await user.create(userData)
-    const { username } = userCreated
+    const { _id } = userCreated
     res.status(201).json({
       ok: true,
       message: 'User Created successfully',
       payload: {
-        username
+        _id
       }
     })
   } catch (err) {
@@ -27,13 +27,18 @@ router.post('/', async (req, res, next) => {
 router.use(authHandler)
 
 router.get('/:id', async (req, res, next) => {
-  const { id } = req.params
-
-  const userObject = await user.getById(id)
   try {
-    res.json({
-      id: userObject.id,
-      userName: userObject.name
+    const { id } = req.params
+
+    const userObject = await user.getById(id)
+
+    res.status(200).json({
+      payload: {
+        id: userObject._id,
+        email: userObject.email,
+        name: userObject.name
+      }
+
     })
   } catch (err) {
     next(err)
@@ -71,7 +76,8 @@ router.delete('/:id', userHandler, async (req, res, next) => {
       status: true,
       message: 'User {id} succesfully deleted',
       payload: {
-        delUser
+        id: delUser.id,
+        email: delUser.email
       }
     })
   } catch (err) {

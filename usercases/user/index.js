@@ -3,10 +3,10 @@ const encrypt = require('../../lib/crypt')
 const jwt = require('../../lib/jwt')
 
 const create = async (dataUser) => {
-  const { password, email } = dataUser
+  const { password, email, role } = dataUser
   const hash = await encrypt.hashPassword(password)
 
-  const user = new User.model({ password: hash, email })
+  const user = new User.model({ password: hash, email, role })
   const savedUser = await user.save()
   return savedUser
 }
