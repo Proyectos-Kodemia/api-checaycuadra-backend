@@ -5,7 +5,8 @@ const Comment = mongoose.model("Comment")
 
 const schema = new Schema({
   user: {
-		 type: Schema.Types.ObjectId, ref: 'Usuario'
+		 type: Schema.Types.ObjectId, 
+    ref: 'Usuario'
   },
   userAccount: {
     type: String,
@@ -37,6 +38,7 @@ const schema = new Schema({
     required: false,
     minlength: 1
 	  },
+  
   documents: [DocumentSchema],
   chat: {}
 },

@@ -1,7 +1,6 @@
 const AddressSchema = require('./utils/address')
 const ScheduleSchema = require('./utils/schedule')
 const mongoose = require('mongoose')
-const { UserSchema } = require('./users')
 const { Schema } = mongoose
 
 const schema = new Schema({
@@ -52,10 +51,8 @@ const schema = new Schema({
   },
 
   address: AddressSchema, // direccion
+  Schedule: ScheduleSchema // horario
 
-  Schedule: ScheduleSchema, // horario
-
-  User: UserSchema
 }, {
   timestamp: true
 })
