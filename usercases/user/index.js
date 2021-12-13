@@ -7,6 +7,8 @@ const create = async (dataUser) => {
   const hash = await encrypt.hashPassword(password)
 
   const user = new User.model({ password: hash, email, role })
+  // if role usando user( userId)
+
   const savedUser = await user.save()
   return savedUser
 }

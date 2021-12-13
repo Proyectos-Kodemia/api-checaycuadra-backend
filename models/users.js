@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     trim: true,
     minlength: 1
   },
-  lastName: { // Verificar si se agrega solo a contadores o también a usuarios
+  lastName: {
     type: String,
     required: false,
     trim: true,
@@ -34,7 +34,7 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    required: true,
+    required: false,
     minlength: 1
   },
   telephone: {

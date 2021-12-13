@@ -57,9 +57,7 @@ router.patch('/:id', userHandler, async (req, res, next) => {
       status: true,
       message: 'Update succesfully',
       payload: {
-        userId: userUpdate._id,
-        name: userUpdate.name,
-        username: userUpdate.username
+        userUpdate
       }
     })
   } catch (err) {
