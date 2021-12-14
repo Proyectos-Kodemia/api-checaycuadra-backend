@@ -1,9 +1,9 @@
 const accountRouter = require('./accountRouter')
 const authRouter = require('./authRouter')
-const documentsRouter = require('./documentsRouter')
-const messageRouter = require('./documentsRouter')
-const mettingRouter = require('./mettingRouter')
-const serviceRouter = require('./servicesRouter')
+// const documentsRouter = require('./documentsRouter')
+// const messageRouter = require('./documentsRouter')
+// const mettingRouter = require('./mettingRouter')
+// const serviceRouter = require('./servicesRouter')
 const userRouter = require('./userRouter')
 
 const apiRouter = (app) => {
