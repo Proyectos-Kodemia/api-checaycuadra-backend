@@ -8,7 +8,7 @@ const apiRouter = require('./routes')
 // const { logErrors, errorHandler } = require('./middlewares/errorHandlers')
 // const authHandler = require('./middlewares/authHandlers')
 
-app.use(cors('*'))
+app.use(cors())
 
 const db = require('./lib/db')
 const port = config.app.port
