@@ -3,7 +3,7 @@ const router = express.Router()
 const account = require('../usercases/account/index')
 const user = require('../usercases/user')
 
-router.post('/', async (req, res, next) => {
+router.post('/account', async (req, res, next) => {
   const { username, password } = req.body
 
   try {
