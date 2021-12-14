@@ -2,16 +2,17 @@ const mongoose = require('mongoose')
 const DocumentSchema = require('./utils/documentos')
 const { Schema } = mongoose
 const Comment = mongoose.model('Comment')
+const Account = mongoose.model('Account')
+const Usuario = mongoose.model('User')
 
 const schema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario'
+    ref: Usuario
   },
   userAccount: {
-    type: String,
-    required: true,
-    minlength: 1
+    type: Schema.Types.ObjectId,
+    ref: Account
   },
   Date: {
     type: Date,
