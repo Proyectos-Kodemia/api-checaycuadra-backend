@@ -42,6 +42,11 @@ const schema = new Schema({
     type: String,
     minlength: 1
   },
+  role: {
+    type: String,
+    minlength: 1,
+    required: true
+  },
 
   address: AddressSchema, // direccion
 

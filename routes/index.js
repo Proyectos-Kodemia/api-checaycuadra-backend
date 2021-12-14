@@ -1,5 +1,5 @@
 const accountRouter = require('./accountRouter')
-// const authRouter = require('./authRouter')
+const authRouter = require('./authRouter')
 // const documentsRouter = require('./documentsRouter')
 // const messageRouter = require('./documentsRouter')
 // const mettingRouter = require('./mettingRouter')
@@ -8,7 +8,7 @@ const accountRouter = require('./accountRouter')
 
 const apiRouter = (app) => {
   app.use('/account', accountRouter)
-  // app.use("/auth", authRouter);
+  app.use('/auth', authRouter)
   // app.use("/documents", documentsRouter);
   // app.use("/message", messageRouter);
   // app.use("/metting", mettingRouter);
