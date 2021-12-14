@@ -49,8 +49,8 @@ const schema = new Schema({
   },
 
   address: AddressSchema, // direccion
-
   Schedule: ScheduleSchema // horario
+
 }, {
   timestamp: true
 })
