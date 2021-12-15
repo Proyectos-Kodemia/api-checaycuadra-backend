@@ -44,11 +44,12 @@ router.post('/', async (req, res, next) => {
     const accountData = req.body
     console.log(accountData)
     const accountCreated = await account.create(accountData)
-    const { username } = accountCreated
+    const { _id } = accountCreated
+    console.log(accountCreated)
     res.status(201).json({
       status: true,
       message: 'Account Created Succesfully',
-      payload: username
+      payload: _id
     })
   } catch (err) {
     console.log('error del post', err)
