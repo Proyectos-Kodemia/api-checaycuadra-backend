@@ -4,10 +4,10 @@ const jwt = require('../../lib/jwt')
 
 const create = async (dataAccount) => {
   // const {id, username, name, password, email, telephone, degree, profileImage, description} = dataAccount
-  const { username, password, email, telephone, role } = dataAccount
+  const { name, lastname, password, email, telephone, role } = dataAccount
   try {
     const hash = await encrypt.hashPassword(password)
-    const account = new Account.model({ username, password: hash, email, telephone, role })
+    const account = new Account.model({ name, lastname, password: hash, email, telephone, role })
     const savedAccount = await account.save()
     return savedAccount
   } catch (err) {
