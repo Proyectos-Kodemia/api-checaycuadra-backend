@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const DocumentSchema = require('./utils/documentos')
+const DocumentSchema = require('./utils/documents')
 const { Schema } = mongoose
-const Comment = mongoose.model('Comment')
+const Comment = require('./utils/comments').model()
 const Account = mongoose.model('Account')
 const Usuario = mongoose.model('User')
 
