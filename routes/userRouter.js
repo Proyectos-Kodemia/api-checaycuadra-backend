@@ -7,10 +7,13 @@ const router = express.Router()
 router.post('/', async (req, res, next) => {
   try {
     const userData = req.body
+    
+    console.log(userData)
+
     const userCreated = await user.create(userData)
     const { _id } = userCreated
     res.status(201).json({
-      ok: true,
+      status: true,
       message: 'User Created successfully',
       payload: {
         _id

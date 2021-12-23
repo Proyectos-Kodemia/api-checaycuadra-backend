@@ -4,18 +4,25 @@ const account = require('../usercases/account/index')
 const user = require('../usercases/user')
 
 router.post('/account', async (req, res, next) => {
-  const { username, password } = req.body
+  const { email, password } = req.body
 
   try {
-    const token = await account.logIn(username, password)
-    res.status(200).json({
-      ok: true,
-      message: 'Log in Succesful',
-      token: token
-    })
+    const token = await account.logIn(email, password)
+    if (token) {
+      res.status(200).json({
+        status: true,
+        message: 'Log in Succesful',
+        token: token
+      })
+    } else {
+      res.status(401).json({
+        status: false,
+        message: 'Autentication Failed, Password or Email invalid'
+      })
+    }
   } catch (error) {
     res.status(401).json({
-      ok: false,
+      status: false,
       message: 'Autentication Failed, Password or Email invalid'
     })
     next(error)
@@ -23,18 +30,26 @@ router.post('/account', async (req, res, next) => {
 })
 
 router.post('/users', async (req, res, next) => {
-  const { email, password } = req.body
-
   try {
+    const { email, password } = req.body
+    console.log(email, password)
+
     const token = await user.logIn(email, password)
-    res.status(200).json({
-      ok: true,
-      message: 'Log in User Succesful',
-      token: token
-    })
+    if (token) {
+      res.status(200).json({
+        status: true,
+        message: 'Log in Succesful',
+        token: token
+      })
+    } else {
+      res.status(401).json({
+        status: false,
+        message: 'Autentication Failed, Password or Email invalid'
+      })
+    }
   } catch (error) {
     res.status(401).json({
-      ok: false,
+      status: false,
       message: 'Autentication Failed, Password or Email invalid'
     })
     next(error)

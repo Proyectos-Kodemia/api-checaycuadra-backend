@@ -3,10 +3,10 @@ const encrypt = require('../../lib/crypt')
 const jwt = require('../../lib/jwt')
 
 const create = async (dataUser) => {
-  const { password, email, role, name, lastName } = dataUser
+  const { password, email, role, name, lastname } = dataUser
   const hash = await encrypt.hashPassword(password)
 
-  const user = new User.model({ password: hash, email, role, name, lastName })
+  const user = new User.model({ password: hash, email, role, name, lastname })
   // if role usando user( userId)
 
   const savedUser = await user.save()
@@ -25,8 +25,8 @@ const getByEmail = async (email) => {
   return await User.model.findOne(email).exec()
 }
 
-const authenticate = async (user, password) => {
-  const hash = user.password
+const authenticate = async (email, password) => {
+  const hash = email.password
   return await encrypt.verifyPassword(password, hash)
 }
 
@@ -38,14 +38,15 @@ const logIn = async (email, password) => {
 
   if (isValid) {
     const payload = {
-      sub: userObject._id
-
+      sub: userObject._id,
+      role: userObject.role
     }
 
     const token = await jwt.sign(payload)
     return token
   } else {
-    error()
+    console.log('error desde login usuario usecase')
+    return false
   }
 }
 

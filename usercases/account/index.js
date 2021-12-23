@@ -23,17 +23,17 @@ const getById = async (id) => {
   return await Account.model.findById(id).exec()
 }
 
-const getByUser = async (username) => {
-  return await Account.model.findOne(username).exec()
+const getByEmail = async (email) => {
+  return await Account.model.findOne(email).exec()
 }
 
-const authenticate = async (user, password) => {
-  const hash = user.password
+const authenticate = async (email, password) => {
+  const hash = email.password
   return await encrypt.verifyPassword(password, hash)
 }
 
-const logIn = async (username, password) => {
-  const userObject = await getByUser({ username })
+const logIn = async (email, password) => {
+  const userObject = await getByEmail({ email })
   const hash = userObject.password
   const isValid = await encrypt.verifyPassword(password, hash)
 
@@ -45,7 +45,8 @@ const logIn = async (username, password) => {
     const token = await jwt.sign(payload)
     return token
   } else {
-    console.log('error en login')
+    console.log('error desde login contador usecase')
+    return false
   }
 }
 
@@ -54,4 +55,4 @@ const update = async (id, accountData) => {
   return await Account.model.findByIdAndUpdate(id, { email, telephone }).exec()
 }
 
-module.exports = { get, getById, getByUser, update, create, logIn, authenticate }
+module.exports = { get, getById, getByEmail, update, create, logIn, authenticate }
