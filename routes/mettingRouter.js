@@ -47,7 +47,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
-router.patch('/:id', userHandler, async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const meetData = req.body
@@ -65,8 +65,8 @@ router.patch('/:id', userHandler, async (req, res, next) => {
     console.log(err)
   }
 })
-
-router.delete('/:id', userHandler, async (req, res, next) => {
+//Verificar como aplicaran los middlewares e.g userHandler
+router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   try {
     const delMeet = await meet.del(id)
@@ -75,7 +75,7 @@ router.delete('/:id', userHandler, async (req, res, next) => {
       message: 'Meet {id} succesfully deleted',
       payload: {
         id: delMeet.id,
-        email: delMeet.email
+        userAccount: delMeet.userAccount
       }
     })
   } catch (err) {
