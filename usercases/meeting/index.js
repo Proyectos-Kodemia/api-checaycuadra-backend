@@ -21,8 +21,12 @@ const getById = async (id) => {
   return await Meeting.model.findById(id).exec()
 }
 
-const getByUser = async (user) => {
-  return await Meeting.model.findOne(user).exec()
+const getByUserClient = async (id) => {
+  return await Meeting.model.find({user: id}).exec()
+}
+
+const getByUserAccount = async (id) => {
+  return await Meeting.model.find({userAccount: id}).exec()
 }
 
 const update = async (postId, postData) => {
@@ -34,11 +38,11 @@ const del = async (meetingId) => {
   return await Meeting.model.findByIdAndDelete(meetingId).exec()
 }
 
-
 module.exports = {
   getAll,
   getById,
-  getByUser,
+  getByUserAccount,
+  getByUserClient,
   update,
   create,
   del

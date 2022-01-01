@@ -26,6 +26,7 @@ router.post('/', async (req, res, next) => {
 
 router.use(authHandler)
 
+// Get by Id cita
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
@@ -34,9 +35,7 @@ router.get('/:id', async (req, res, next) => {
 
     res.status(200).json({
       payload: {
-        id: meetObject._id,
-        email: meetObject.email,
-        name: meetObject.name
+        meetObject
       }
 
     })
@@ -45,6 +44,47 @@ router.get('/:id', async (req, res, next) => {
     console.log(err)
   }
 })
+
+// Get Meeting by UserClient
+router.get('/client/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const meetObject = await meet.getByUserClient(id)
+
+    res.status(200).json({
+      payload: {
+        meetObject
+      }
+
+    })
+  } catch (err) {
+    next(err)
+    console.log(err)
+  }
+})
+
+// Get meeting by User Account
+router.get('/account/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const meetObject = await meet.getByUserAccount(id)
+
+    res.status(200).json({
+      payload: {
+        meetObject
+      }
+
+    })
+  } catch (err) {
+    next(err)
+    console.log(err)
+  }
+})
+
+
+
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 router.patch('/:id', async (req, res, next) => {
