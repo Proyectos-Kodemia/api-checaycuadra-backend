@@ -26,6 +26,7 @@ router.post('/', async (req, res, next) => {
 
 router.use(authHandler)
 
+// Get by Id cita
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
@@ -34,9 +35,7 @@ router.get('/:id', async (req, res, next) => {
 
     res.status(200).json({
       payload: {
-        id: meetObject._id,
-        email: meetObject.email,
-        name: meetObject.name
+        meetObject
       }
 
     })
@@ -46,18 +45,60 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// Usamos userhHandler para que solo el usuario puede modificar su propio registro
-router.patch('/:id', userHandler, async (req, res, next) => {
+// Get Meeting by UserClient
+router.get('/client/:id', async (req, res, next) => {
   try {
     const { id } = req.params
-    const meetData = req.body
 
-    const meetUpdate = await meet.update(id, meetData)
+    const meetObject = await meet.getByUserClient(id)
+
+    res.status(200).json({
+      payload: {
+        meetObject
+      }
+
+    })
+  } catch (err) {
+    next(err)
+    console.log(err)
+  }
+})
+
+// Get meeting by User Account
+router.get('/account/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const meetObject = await meet.getByUserAccount(id)
+
+    res.status(200).json({
+      payload: {
+        meetObject
+      }
+
+    })
+  } catch (err) {
+    next(err)
+    console.log(err)
+  }
+})
+
+
+
+
+// Usamos userhHandler para que solo el usuario puede modificar su propio registro
+// Path with meeting Id
+router.patch('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const meetingData = req.body
+
+    const meetingUpdate = await meet.update(id, meetingData)
     res.status(200).json({
       status: true,
       message: 'Update succesfully',
       payload: {
-        userUpdate: meetUpdate
+        userUpdate: meetingUpdate
       }
     })
   } catch (err) {
@@ -65,8 +106,8 @@ router.patch('/:id', userHandler, async (req, res, next) => {
     console.log(err)
   }
 })
-
-router.delete('/:id', userHandler, async (req, res, next) => {
+//Verificar como aplicaran los middlewares e.g userHandler
+router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   try {
     const delMeet = await meet.del(id)
@@ -75,7 +116,7 @@ router.delete('/:id', userHandler, async (req, res, next) => {
       message: 'Meet {id} succesfully deleted',
       payload: {
         id: delMeet.id,
-        email: delMeet.email
+        userAccount: delMeet.userAccount
       }
     })
   } catch (err) {
