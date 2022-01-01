@@ -87,17 +87,18 @@ router.get('/account/:id', async (req, res, next) => {
 
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
+// Path with meeting Id
 router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
-    const meetData = req.body
+    const meetingData = req.body
 
-    const meetUpdate = await meet.update(id, meetData)
+    const meetingUpdate = await meet.update(id, meetingData)
     res.status(200).json({
       status: true,
       message: 'Update succesfully',
       payload: {
-        userUpdate: meetUpdate
+        userUpdate: meetingUpdate
       }
     })
   } catch (err) {

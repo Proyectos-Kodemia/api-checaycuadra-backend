@@ -29,9 +29,9 @@ const getByUserAccount = async (id) => {
   return await Meeting.model.find({userAccount: id}).exec()
 }
 
-const update = async (postId, postData) => {
-  const { Date, time, service, total } = postData
-  return await Meeting.model.findByIdAndUpdate(postId, { Date, time, service, total }).exec()
+const update = async (meetingId, meetingData) => {
+  const { user, userAccount, link, time, service, total } = meetingData
+  return await Meeting.model.findByIdAndUpdate(meetingId, { user, userAccount, link, time, service, total }).exec()
 }
 
 const del = async (meetingId) => {
