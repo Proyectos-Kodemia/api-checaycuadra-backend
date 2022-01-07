@@ -20,6 +20,9 @@ const StorageSchema = new Schema({
     type: Date,
     required: true,
     minlength: 1
+  },
+  linkAWS: {
+    type: String
   }
 }, {
   timestamp: true

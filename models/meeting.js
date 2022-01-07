@@ -41,7 +41,7 @@ const schema = new Schema({
   },
 
   documents:{ // Recibe los distintos documentos de la cita enviados por cliente o contador
-    type:Array,
+    type: Array,
   },
   chat: {},
 

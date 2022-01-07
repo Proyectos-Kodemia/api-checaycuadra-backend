@@ -19,6 +19,9 @@ const DocumentSchema = new Schema({
   },
   comments: {
     type: String
+  },
+  linkAWS: {
+    type: String
   }
 }, {
   timestamp: true
