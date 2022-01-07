@@ -40,7 +40,9 @@ const schema = new Schema({
     minlength: 1
   },
 
-  documents: [DocumentSchema],
+  documents:{ // Recibe los distintos documentos de la cita enviados por cliente o contador
+    type:Array,
+  },
   chat: {},
 
   meetingComment: [{

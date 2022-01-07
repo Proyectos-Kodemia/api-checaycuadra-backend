@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const DocumentSchema = new Schema({
-
   nameDocument: {
     type: String,
     required: true
@@ -10,9 +9,13 @@ const DocumentSchema = new Schema({
   description: {
     type: String
   },
-  whoSent: {
+  whoReceived: { // Id de quien recibe , coincide con los idś de esa cita
     type: String,
-    enum: ['user', 'account']
+    required: true
+  },
+  owner:{ // Id de quien comparte , coincide con los idś de esa cita y con el IdUpload de storage
+    type: String,
+    required: true
   },
   comments: {
     type: String
