@@ -11,6 +11,11 @@ const create = async (dataFiles) => {
   return filesSaved
 }
 
+const updateById = async(id, dataFile) =>{
+    const fileUpdated = Storage.model.findByIdAndUpdate(id, dataFile, {new:true})
+    return fileUpdated
+}
+
 const get = async () => {
   return await User.model.find({}).exec()
 }
@@ -57,4 +62,4 @@ const del = async (userId) => {
   return await User.model.findByIdAndDelete(userId).exec()
 }
 
-module.exports = { create, get, getById, getByEmail, authenticate, logIn, update, del }
+module.exports = { create, updateById,get, getById, getByEmail, authenticate, logIn, update, del }
