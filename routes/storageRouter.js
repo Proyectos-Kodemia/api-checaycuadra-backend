@@ -6,8 +6,11 @@ const upload = require('../lib/multer')
 
 router.post('/',upload.single('file'), async (req, res, next) => {
     try {
+      console.log('tipo de dato:', typeof(req.body))
       console.log(req.body)
-      const fileData = req.body
+
+      const fileData = JSON.parse(req.body.data)
+      console.log('file json parse',fileData)
       const file = req.file
       /*
       if (!file) {
@@ -19,13 +22,20 @@ router.post('/',upload.single('file'), async (req, res, next) => {
       */
       const urlImage = file.location
 
+      const dataFiles={
+        idUpload: fileData.idUpload,
+        nameDocument: fileData.nameDocument,
+        description:fileData.description,
+        comments: fileData.comments,
+        linkAWS: urlImage,
+      }
 
-      const fileCreated = await storage.create({fileData,linkAWS:urlImage})
+      const fileCreated = await storage.create(dataFiles)
       const { _id } = fileCreated
 
       res.status(201).json({
         ok: true,
-        message: 'Meet Created successfully',
+        message: 'File Created successfully',
         payload: {
           _id
         }
