@@ -1,19 +1,18 @@
 const Storage = require('../../models/storage')
 
 const create = async (dataFiles) => {
-  const { idUpload, nameDocument,description,comments} = dataFiles
+  const { idUpload, nameDocument,description,comments,linkAWS} = dataFiles
+  const date = await new Date
 
-
-
-  const files = new Storage.model({ idUpload, nameDocument, description,comments })
+  const files = new Storage.model({ idUpload, nameDocument, description,comments,Date: date,linkAWS })
 
   const filesSaved = await files.save()
   return filesSaved
 }
 
 const updateById = async(id, dataFile) =>{
-    const fileUpdated = Storage.model.findByIdAndUpdate(id, dataFile, {new:true})
-    return fileUpdated
+  const fileUpdated = Storage.model.findByIdAndUpdate(id, dataFile, {new:true})
+  return fileUpdated
 }
 
 const get = async () => {

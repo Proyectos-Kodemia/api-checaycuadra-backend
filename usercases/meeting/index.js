@@ -4,7 +4,7 @@ const create = async (meetData) => {
   const date = await new Date()
   const { user, userAccount, time, service, total} = meetData
 
-  // Falta crear el link y agregarlo aquí
+  // Falta crear el link de zoom y agregarlo aquí
   const link ="https:hjaoijfopjasdf"
   const meeting = new Meeting.model({user, userAccount, time, service, total, Date:date,link})
 

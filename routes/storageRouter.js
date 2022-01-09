@@ -2,12 +2,26 @@ const express = require('express')
 const { authHandler, userHandler } = require('../middlewares/authHandlers')
 const storage = require ('../usercases/storage')
 const router = express.Router()
+const upload = require('../lib/multer')
 
-router.post('/', async (req, res, next) => {
+router.post('/',upload.single('file'), async (req, res, next) => {
     try {
-      const filesData = req.body
-      const meetCreated = await storage.create(filesData)
-      const { _id } = filesCreated
+      console.log(req.body)
+      const fileData = req.body
+      const file = req.file
+      /*
+      if (!file) {
+        res.status(400).json({
+          success: false,
+          message: 'Agrega el archivo'
+        })
+      }
+      */
+      const urlImage = file.location
+
+
+      const fileCreated = await storage.create({fileData,linkAWS:urlImage})
+      const { _id } = fileCreated
 
       res.status(201).json({
         ok: true,
@@ -22,4 +36,6 @@ router.post('/', async (req, res, next) => {
     }
   })
 
+
+  
 module.exports = router
