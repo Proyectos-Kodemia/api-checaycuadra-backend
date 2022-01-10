@@ -1,11 +1,31 @@
 const Meeting = require('../../models/meeting')
+const linkMeet = require('google-meet-api').meet
 
 const create = async (meetData) => {
   const date = await new Date()
   const { user, userAccount, time, service, total} = meetData
 
   // Falta crear el link de zoom y agregarlo aquí
-  const link ="https:hjaoijfopjasdf"
+
+  const link = "FGFGSAASFDASD"
+  const linktest = linkMeet({
+    clientId : process.env.GOOGLE_ID_Client_Auth,
+    clientSecret : process.env.GOOGLE_Secret_Client_Auth,
+    refreshToken : 'XXXXXXXXXCNfW2MMGvJUSk4V7LplXAXXXX',
+    date : "2022-01-09",
+    time : "22:59",
+    summary : 'summary',
+    location : 'location',
+    description : 'description'
+    }).then(function(result){
+    console.log("Este seria el link:",result);//result is the final link
+    })
+    
+    console.log(linktest)
+
+
+
+
   const meeting = new Meeting.model({user, userAccount, time, service, total, Date:date,link})
 
   const savedMeeting = await meeting.save()

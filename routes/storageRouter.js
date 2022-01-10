@@ -19,6 +19,11 @@ router.post('/',upload.single('file'), async (req, res, next) => {
           message: 'Agrega el archivo'
         })
       }
+
+
+
+
+      
       */
       const urlImage = file.location
 
