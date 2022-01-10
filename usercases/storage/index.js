@@ -1,6 +1,7 @@
 const Storage = require('../../models/storage')
 
 const create = async (dataFiles) => {
+  // {fileData: {...}. linkAWS: "https://"}
   const { idUpload, nameDocument,description,comments,linkAWS} = dataFiles
   const date = await new Date
 
