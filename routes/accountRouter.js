@@ -4,22 +4,9 @@ const account = require('../usercases/account')
 
 const router = express.Router()
 
-router.get('/', async (_, res, next) => {
-  try {
-    const accountGet = await account.get()
-    res.status(200).json({
-      status: true,
-      message: 'Done!',
-      payload: accountGet
-    })
-  } catch (err) {
-    console.log('error del Get', err)
-    next(err)
-  }
-})
-
 router.get('/:id', async (req, res, next) => {
   try {
+    console.log('entro en id')
     const { id } = req.params
     if (id) {
       const accountObject = await account.getById(id)
@@ -39,10 +26,31 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.query.name) {
+      const searchUser = req.query.name
+      const accountGet = await account.getByName(searchUser)
+      res.status(200).json({
+        status: true,
+        payload: accountGet
+      })
+    } else {
+      const accountGet = await account.get()
+      res.status(200).json({
+        status: true,
+        payload: accountGet
+      })
+    }
+  } catch (err) {
+    console.log('error del Get account', err)
+    next(err)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const accountData = req.body
-    console.log(accountData)
     const accountCreated = await account.create(accountData)
     const { _id } = accountCreated
     console.log(accountCreated)
@@ -71,7 +79,7 @@ router.patch('/:id', async (req, res, next) => {
         payload: {
           Id: accountUpdate._id,
           name: accountUpdate.name,
-          username: accountUpdate.username
+          role: accountUpdate.role
         }
       })
     } else {

@@ -18,7 +18,6 @@ const schema = new Schema({
   },
   lastname: {
     type: String,
-    required: true,
     trim: true,
     minlength: 1
   },
@@ -54,9 +53,13 @@ const schema = new Schema({
     minlength: 1,
     required: true
   },
-
+  evaluation: {
+    type: Number
+  },
   address: AddressSchema, // direccion
   Schedule: ScheduleSchema // horario
+  // address: { type: Schema.ObjectId, ref: 'Address' }, // direccion
+  // Schedule: { type: Schema.ObjectId, ref: 'schedule' } // horario
 
 }, {
   timestamp: true

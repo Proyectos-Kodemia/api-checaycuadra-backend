@@ -19,7 +19,7 @@ const AddressSchema = new Schema({
     minlength: 1
   },
   town: { // municipio
-    type: Date,
+    type: String,
     minlength: 1
   },
   state: { // estado
