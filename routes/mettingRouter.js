@@ -1,11 +1,22 @@
 const express = require('express')
 const meet = require('../usercases/meeting')
 const { authHandler, userHandler } = require('../middlewares/authHandlers')
-
+const config = require("../lib/config")
 const router = express.Router()
 
 router.post('/', async (req, res, next) => {
   try {
+
+    const googleClientId = config.google.clientId
+    const googleSecret = config.google.secret
+    const googleRedirectUri = config.google.redirectUri
+
+    console.log(googleClientId)
+    console.log(googleSecret)
+    console.log(googleRedirectUri)
+
+    const auth = meet.authUserRedirect(googleClientId,googleSecret,googleRedirectUri)
+
     const meetData = req.body
     const meetCreated = await meet.create(meetData)
     const { _id } = meetCreated
