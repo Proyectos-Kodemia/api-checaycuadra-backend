@@ -55,8 +55,25 @@ const update = async (userId, userData) => {
   return await User.model.findByIdAndUpdate(userId, { username, name }).exec()
 }
 
+const updateTokens = async (userId, tokens) => {
+  const accessToken = tokens.access_token
+  const refreshToken = tokens.refresh_token
+
+  return await User.model.findByIdAndUpdate(userId, { accessToken, refreshToken }).exec()
+}
+
 const del = async (userId) => {
   return await User.model.findByIdAndDelete(userId).exec()
 }
 
-module.exports = { create, get, getById, getByEmail, authenticate, logIn, update, del }
+module.exports = { 
+  create, 
+  get, 
+  getById, 
+  getByEmail, 
+  authenticate, 
+  logIn, 
+  update, 
+  del,
+  updateTokens 
+}
