@@ -69,12 +69,7 @@ router.get('/callback', async (req, res, next) => {
   router.post('/create-event', async (req, res, next) => {
     try {
   
-      const googleClientId = config.google.clientId
-      const googleSecret = config.google.secret
-      const googleRedirectUri = config.google.redirectUri
-  
-       
-      const auth = await google.authUserRedirect(googleClientId,googleSecret,googleRedirectUri)
+      
         
       res.status(200).json({
         ok: true,
