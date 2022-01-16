@@ -1,26 +1,11 @@
 const Meeting = require('../../models/meeting')
-const linkMeet = require('google-meet-api').meet
-const oauth2 = require("../../lib/oauth2") 
-
-// Authorize Google process
-
-const authUserRedirect= async (googleClientId,googleSecret,googleRedirectUri)=>{
-
-  const url = await oauth2.redirectUrl(googleClientId,googleSecret,googleRedirectUri)
-
-  return url
-
-}
-
-const authUserSetCredencials = async (accestTOken,refreshToken)=>{
-  return await oauth2.setCredentials(accesToken,refresToken)
-}
+const linkMeet = require('google-meet-api').meet // con esta libreria se crea el link del google meet
 
 const create = async (meetData) => {
   const date = await new Date()
   const { user, userAccount, time, service, total} = meetData
 
-  // Falta crear el link de zoom y agregarlo aquí
+  // El link de meet se crea en este punto trayendo el refresh-token del usuario
 
   const link = "FGFGSAASFDASD"
   const linktest = await linkMeet({
@@ -80,6 +65,5 @@ module.exports = {
   getByUserClient,
   update,
   create,
-  del,
-  authUserRedirect
+  del
 }

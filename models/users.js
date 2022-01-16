@@ -48,6 +48,12 @@ const UserSchema = new Schema({
   profileImage: {
     type: String
   },
+  acessToken: {
+    type: String
+  },
+  refreshToken: {
+    type: String
+  },
   idMercadoPago: {
     type: String
   }
