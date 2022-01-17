@@ -29,10 +29,12 @@ router.post('/auth', async (req, res, next) => {
   })
 
 
+// agregar el middleware de authentication
 
 router.get('/callback', async (req, res, next) => {
     try {
-
+        // de JWT voy a sacar el Id 
+        
         const {userId, role} = req.body // Id del cliente, solo se guarda si el role es cliente
         const code = req.query.code
         console.log("aqui el code:",code)
