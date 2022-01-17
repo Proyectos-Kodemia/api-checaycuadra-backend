@@ -48,7 +48,7 @@ const UserSchema = new Schema({
   profileImage: {
     type: String
   },
-  acessToken: {
+  accessToken: {
     type: String
   },
   refreshToken: {

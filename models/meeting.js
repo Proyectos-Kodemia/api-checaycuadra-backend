@@ -14,19 +14,21 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: Account
   },
-  Date: {
-    type: Date,
-    required: true,
-    minlength: 1
+  summary: {
+    type: String, 
+  },
+  description: {
+    type: String, 
+  },
+  startDateTime:{
+    type:String,
+  },
+  endDateTime:{
+    type:String,
   },
   link: {
     type: String,
-    required: true,
-    minlength: 1
-  },
-  time: {
-    type: String,
-    required: true,
+    required: false,
     minlength: 1
   },
   service: {
@@ -39,30 +41,12 @@ const schema = new Schema({
     required: false,
     minlength: 1
   },
-
   documents:{ // Recibe los distintos documentos de la cita enviados por cliente o contador
     type: Array,
   },
-  chat: {},
-
-  meetingComment: [{
-    type: Schema.Types.ObjectId,
-    ref: Comment
-  }]
 }, {
   timestamp: true
 })
-
-// {
-// usuario: 'ObjectId(wereyy234565434re)',
-// hora: '',
-// fecha: '',
-// documents: [
-// {
-
-// }
-// ]
-// }
 
 module.exports = {
   model: mongoose.model('Cita', schema),

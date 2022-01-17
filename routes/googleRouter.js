@@ -39,9 +39,9 @@ router.get('/callback', async (req, res, next) => {
         const tokens = await google.getTokens(code)
         console.log("los tokens:",tokens)
 
-        const saveTokens = await users.updateTokens(userId,tokens)
-        console.log("los token salvados", saveTokens)
-        // if(role==="cliente"){
+        const saveTokens = await users.updateTokens('61e3bba7860e938a7f65ba12',tokens)
+        // console.log("los token salvados", saveTokens)
+        // // if(role==="cliente"){
         //     const saveTokens = await user.getTokens(userId,tokens)
         // }else{
         //     throw new Error ("Rol de usuario no autorizado")
@@ -51,7 +51,7 @@ router.get('/callback', async (req, res, next) => {
         ok: true,
         payload: {
           message: "Usuario autenticado correctamente",
-          tokens: saveTokens
+          tokens: tokens
         }
       })
     } catch (err) {

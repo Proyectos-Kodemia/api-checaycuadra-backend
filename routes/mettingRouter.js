@@ -5,7 +5,6 @@ const config = require("../lib/config")
 const router = express.Router()
 
 
-
 router.post('/', async (req, res, next) => {
   try {
     
@@ -17,7 +16,7 @@ router.post('/', async (req, res, next) => {
       ok: true,
       message: 'Meet Created successfully',
       payload: {
-        _id
+        meetCreated,
       }
     })
   } catch (err) {
