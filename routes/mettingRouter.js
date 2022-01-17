@@ -1,19 +1,22 @@
 const express = require('express')
 const meet = require('../usercases/meeting')
 const { authHandler, userHandler } = require('../middlewares/authHandlers')
-
+const config = require("../lib/config")
 const router = express.Router()
+
 
 router.post('/', async (req, res, next) => {
   try {
+    
     const meetData = req.body
     const meetCreated = await meet.create(meetData)
     const { _id } = meetCreated
+
     res.status(201).json({
       ok: true,
       message: 'Meet Created successfully',
       payload: {
-        _id
+        meetCreated,
       }
     })
   } catch (err) {

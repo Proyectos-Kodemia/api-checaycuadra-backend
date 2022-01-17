@@ -1,15 +1,77 @@
 const Meeting = require('../../models/meeting')
+const linkMeet = require('google-meet-api').meet // con esta libreria se crea el link del google meet
+const { google } = require("googleapis")
+const randomstring= require("randomstring")
+const config = require('../../lib/config')
+const userCase = require('../user')
+const accountCase = require('../account')
 
 const create = async (meetData) => {
-  const date = await new Date()
-  const { user, userAccount, time, service, total} = meetData
+  const { user, userAccount, service, startDateTime,endDateTime, total} = meetData
+  const summary = `Cita para el servicio de ${service}`
+  const description = `Cita creada por Checa y Cuadra`
+  // Obtener refresh token de DB
 
-  // Falta crear el link y agregarlo aquí
-  const link ="https:hjaoijfopjasdf"
-  const meeting = new Meeting.model({user, userAccount, time, service, total, Date:date,link})
+  const {refreshToken} = await userCase.getById(user)
+
+  const googleClientId = config.google.clientId
+  const googleSecret = config.google.secret
+  const googleRedirectUri = config.google.redirectUri
+
+  const oauth2Client = new google.auth.OAuth2(
+    googleClientId,
+    googleSecret,
+    googleRedirectUri
+    )
+
+    // Setting user credentials
+  oauth2Client.setCredentials({refresh_token:refreshToken})
+  const requestId = randomstring.generate()
+
+    // Obtener email del contador
+    const {email} = await accountCase.getById(userAccount)
+
+  // Crear evento
+  const calendar = google.calendar('v3')
+  const meetGoogle = await calendar.events.insert({
+    auth:oauth2Client,
+    calendarId:'primary',
+    conferenceDataVersion:1,
+    requestBody:{
+      summary:summary,
+      description:description,
+      colorId:'7',
+      start:{
+        dateTime: new Date(startDateTime),
+        timezone:'America/Mexico_City'
+      },
+      end:{
+        dateTime: new Date(endDateTime),
+        timezone:'America/Mexico_City'
+      },
+      attendees:[
+        {email:email}
+      ],
+      
+      conferenceData:{
+        createRequest:{
+          requestId: requestId,
+          conferenceSolutionKey:{
+            type:'hangoutsMeet'
+          }
+          
+        }
+      }
+    }
+  })
+  
+  const {hangoutLink} = meetGoogle.data
+
+  // Guardando cita en la base de datos
+  const meeting = new Meeting.model({user, userAccount, startDateTime,endDateTime, service, total,hangoutLink})
 
   const savedMeeting = await meeting.save()
-
+  
   return savedMeeting
 }
 
