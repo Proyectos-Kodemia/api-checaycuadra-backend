@@ -26,7 +26,7 @@ const schema = new Schema({
   endDateTime:{
     type:String,
   },
-  link: {
+  hangoutLink: {
     type: String,
     required: false,
     minlength: 1

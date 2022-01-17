@@ -4,16 +4,15 @@ const { google } = require("googleapis")
 const randomstring= require("randomstring")
 const config = require('../../lib/config')
 const userCase = require('../user')
+const accountCase = require('../account')
 
 const create = async (meetData) => {
-  const { user, userAccount, service, starDateTime,endDateTime, total} = meetData
+  const { user, userAccount, service, startDateTime,endDateTime, total} = meetData
   const summary = `Cita para el servicio de ${service}`
   const description = `Cita creada por Checa y Cuadra`
   // Obtener refresh token de DB
 
   const {refreshToken} = await userCase.getById(user)
-
-  console.log(">Refresh token:",refreshToken)
 
   const googleClientId = config.google.clientId
   const googleSecret = config.google.secret
@@ -28,22 +27,22 @@ const create = async (meetData) => {
     // Setting user credentials
   oauth2Client.setCredentials({refresh_token:refreshToken})
   const requestId = randomstring.generate()
-  console.log("checar randomstring:",requestId)
-  // checar randomstring.generate()
 
-    // probar quitar acceso y obtener el refresh token nuevamente
+    // Obtener email del contador
+    const {email} = await accountCase.getById(userAccount)
 
   // Crear evento
   const calendar = google.calendar('v3')
   const meetGoogle = await calendar.events.insert({
     auth:oauth2Client,
     calendarId:'primary',
+    conferenceDataVersion:1,
     requestBody:{
       summary:summary,
       description:description,
       colorId:'7',
       start:{
-        dateTime: new Date(starDateTime),
+        dateTime: new Date(startDateTime),
         timezone:'America/Mexico_City'
       },
       end:{
@@ -51,36 +50,29 @@ const create = async (meetData) => {
         timezone:'America/Mexico_City'
       },
       attendees:[
-        {email:'phdmikes400@gmail.com'},
-        {email:'ferdinand.bracho@gmail.com'}
+        {email:email}
       ],
-      autoAddHangouts:true,
-      // conferenceDataVersion:1,
+      
       conferenceData:{
         createRequest:{
           requestId: requestId,
           conferenceSolutionKey:{
             type:'hangoutsMeet'
-          },
-          entryPoints:[
-            {
-              entryPointType:'video',
-              label:requestId  //probando con request Id
-            }
-          ]
+          }
           
         }
       }
     }
   })
+  
+  const {hangoutLink} = meetGoogle.data
 
-
-  // De donde saco el link???
-  const meeting = new Meeting.model({user, userAccount, starDateTime,endDateTime, service, total})
+  // Guardando cita en la base de datos
+  const meeting = new Meeting.model({user, userAccount, startDateTime,endDateTime, service, total,hangoutLink})
 
   const savedMeeting = await meeting.save()
-
-  return meetGoogle
+  
+  return savedMeeting
 }
 
 const getAll = async () => {
