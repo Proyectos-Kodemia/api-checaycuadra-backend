@@ -2,7 +2,7 @@ const express = require('express')
 const config = require('./lib/config')
 const cors = require('cors')
 const app = express()
-
+const bodyParser = require('body-parser')
 const apiRouter = require('./routes')
 
 // const { logErrors, errorHandler } = require('./middlewares/errorHandlers')
@@ -14,6 +14,9 @@ const db = require('./lib/db')
 const port = config.app.port
 
 app.use(express.json())
+
+// Middleware para mercado pago
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
   res.send('Hello World😊!')
