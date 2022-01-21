@@ -38,9 +38,9 @@ router.post('/checkout', async (req, res, next) => {
               }
             ],
             back_urls:{ // Va al front para señalar cual fue el status del pago
-              success:"http://localhost:4000/mercadopago/success",
-              failure:"http://localhost:4000/mercadopago/failure",
-              pending:"http://localhost:4000/mercadopago/pending"
+              success:"http://localhost:4000/principal/Cita",
+              failure:"http://localhost:4000/principal/Cita",
+              pending:"http://localhost:4000/principal/Cita"
             },
             auto_return:'approved',
           };
