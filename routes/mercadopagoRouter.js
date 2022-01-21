@@ -23,15 +23,29 @@ router.post('/checkout', async (req, res, next) => {
           // Traer información del servicio a comprar
 
           // Parametros de la compra
+          console.log(req)
+
+          console.log(req.body)
+          // const request = JSON.parse(req.body)
+
           let preference = {
             items: [
               {
                 title: req.body.title,
-                unit_price: parseInt(req.body.price),
-                quantity: req.body.quantity,
-              },
+                unit_price: parseInt(req.body.unit_price),
+                quantity: parseInt(req.body.quantity)
+                
+              }
             ],
+            back_urls:{ // Va al front para señalar cual fue el status del pago
+              success:"http://localhost:4000/mercadopago/success",
+              failure:"http://localhost:4000/mercadopago/failure",
+              pending:"http://localhost:4000/mercadopago/pending"
+            },
+            auto_return:'approved',
           };
+
+          console.log(preference)
 
           mercadopago.preferences
             .create(preference)
@@ -39,7 +53,7 @@ router.post('/checkout', async (req, res, next) => {
               // En esta instancia deberás asignar el valor dentro de response.body.id por el ID de preferencia solicitado en el siguiente paso
               console.log(response.body)
 
-              res.redirect(response.body.init_point)
+              res.json(response.body.sandbox_init_point)
 
             })
             .catch(function (error) {
@@ -59,6 +73,10 @@ router.post('/checkout', async (req, res, next) => {
       console.log(err)
     }
   })
+
+
+
+
 
 
 module.exports = router

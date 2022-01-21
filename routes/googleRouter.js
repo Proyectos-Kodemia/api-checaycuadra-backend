@@ -36,6 +36,7 @@ router.get('/callback', async (req, res, next) => {
         const {userId, role} = req.body // Id del cliente, solo se guarda si el role es cliente
         const code = req.query.code
         console.log("aqui el code:",code)
+        
         const tokens = await google.getTokens(code)
         console.log("los tokens:",tokens)
 
