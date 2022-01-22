@@ -31,12 +31,22 @@ const schema = new Schema({
     required: false,
     minlength: 1
   },
-  service: {
+  title: { // Serrvicio
     type: String,
     required: true,
     minlength: 1
   },
-  total: {
+  unit_price: {
+    type: String,
+    required: false,
+    minlength: 1
+  },
+  quantity: {
+    type: String,
+    required: false,
+    minlength: 1
+  },
+  statusPayment: {
     type: String,
     required: false,
     minlength: 1

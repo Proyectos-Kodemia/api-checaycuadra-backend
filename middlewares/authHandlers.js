@@ -6,7 +6,7 @@ const authHandler = async (req, res, next) => {
   try {
     const payload = await jwt.verifyToken(token)
     if (payload) {
-      next()
+      next(payload)
     }
   } catch (error) {
     res.status(403).json({

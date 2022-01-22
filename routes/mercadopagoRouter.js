@@ -16,7 +16,7 @@ mercadopago.configure({
   access_token: secretMercadoPago
 })
 
-// Route
+// Petición a mercado pago del producto
 
 router.post('/checkout', async (req, res, next) => {
     try {
@@ -74,9 +74,19 @@ router.post('/checkout', async (req, res, next) => {
     }
   })
 
+  // Recibir el status de pago de mercado pago
 
+  // router.get('/checkout', async (req, res, next) => {
+  //   try {
+        
+  //       const {statusPayment} = req.body
 
-
+         
+  //   }catch (err) {
+  //     next(err)
+  //     console.log(err)
+  //   }
+  // })
 
 
 module.exports = router

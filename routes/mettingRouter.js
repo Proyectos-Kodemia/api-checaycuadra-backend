@@ -5,11 +5,14 @@ const config = require("../lib/config")
 const router = express.Router()
 
 
-router.post('/', async (req, res, next) => {
+router.post('/',authHandler, async (req, res, next) => {
   try {
-    
+    // El payload me lo regresa authHandler
+    const {sub} = payload
+
     const meetData = req.body
-    const meetCreated = await meet.create(meetData)
+  
+    const meetCreated = await meet.create(meetData,sub)
     const { _id } = meetCreated
 
     res.status(201).json({
