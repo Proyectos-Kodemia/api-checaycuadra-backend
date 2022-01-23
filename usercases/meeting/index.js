@@ -8,6 +8,18 @@ const accountCase = require('../account')
 
 const create = async (meetData,sub) => {
   const user = sub
+  const { userAccount, title, startDateTime,endDateTime, unit_price, quantity,statusPayment} = meetData
+
+  // Guardando cita en la base de datos
+  const meeting = new Meeting.model({user, userAccount, startDateTime,endDateTime, title, quantity,unit_price,statusPayment})
+
+  const savedMeeting = await meeting.save()
+  
+  return savedMeeting
+}
+
+const createLink = async (meetData,sub) => {
+  const user = sub
   const { userAccount, service, startDateTime,endDateTime, total} = meetData
   const summary = `Cita para el servicio de ${service}`
   const description = `Cita creada por Checa y Cuadra`
@@ -108,5 +120,6 @@ module.exports = {
   getByUserClient,
   update,
   create,
+  createLink,
   del
 }

@@ -5,10 +5,11 @@ const config = require("../lib/config")
 const router = express.Router()
 
 
-router.post('/',authHandler, async (req, res, next) => {
+router.post('/', authHandler,async (req, res, next) => {
   try {
     // El payload me lo regresa authHandler
-    const {sub} = payload
+    const {sub} = req.params.tokenPayload
+    // const sub = '61ec3b8662d4470e36fb0045'
 
     const meetData = req.body
   

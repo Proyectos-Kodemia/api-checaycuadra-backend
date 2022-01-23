@@ -31,7 +31,7 @@ const schema = new Schema({
     required: false,
     minlength: 1
   },
-  title: { // Serrvicio
+  title: { // Servicio
     type: String,
     required: true,
     minlength: 1
