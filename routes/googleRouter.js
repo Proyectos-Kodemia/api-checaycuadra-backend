@@ -28,19 +28,19 @@ router.post('/auth', async (req, res, next) => {
     }
   })
 
-
-
-router.get('/callback', async (req, res, next) => {
+  // patch que recibe el code del front
+router.patch('/callback',authHandler, async (req, res, next) => {
     try {
+        const {role} = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
 
-        const {userId, role} = req.body // Id del cliente, solo se guarda si el role es cliente
+        const {sub} = req.params.tokenPayload   
         const code = req.query.code
         console.log("aqui el code:",code)
         
         const tokens = await google.getTokens(code)
         console.log("los tokens:",tokens)
 
-        const saveTokens = await users.updateTokens('61e3bba7860e938a7f65ba12',tokens)
+        const saveTokens = await users.updateTokens(sub,tokens)
         // console.log("los token salvados", saveTokens)
         // // if(role==="cliente"){
         //     const saveTokens = await user.getTokens(userId,tokens)
@@ -67,22 +67,23 @@ router.get('/callback', async (req, res, next) => {
     }
   })
 
-  router.post('/create-event', async (req, res, next) => {
-    try {
+
+  // router.post('/create-event', async (req, res, next) => {
+  //   try {
   
       
         
-      res.status(200).json({
-        ok: true,
-        payload: {
-          authUrl: auth
-        }
-      })
-    } catch (err) {
-      next(err)
-      console.log(err)
-    }
-  })
+  //     res.status(200).json({
+  //       ok: true,
+  //       payload: {
+  //         authUrl: auth
+  //       }
+  //     })
+  //   } catch (err) {
+  //     next(err)
+  //     console.log(err)
+  //   }
+  // })
 
 
   module.exports = router
