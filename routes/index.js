@@ -7,6 +7,7 @@ const mettingRouter = require('./mettingRouter')
 const userRouter = require('./userRouter')
 const storageRouter = require('./storageRouter')
 const googleRouter = require('./googleRouter')
+const mercadopagoRouter = require('./mercadopagoRouter')
 
 const apiRouter = (app) => {
   app.use('/account', accountRouter)
@@ -17,6 +18,7 @@ const apiRouter = (app) => {
   // app.use("/service", serviceRouter);
   app.use('/storage/',storageRouter)
   app.use('/google',googleRouter)
+  app.use('/mercadopago',mercadopagoRouter)
   app.use('/users', userRouter)
 }
 
