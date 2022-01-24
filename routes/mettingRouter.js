@@ -4,12 +4,15 @@ const { authHandler, userHandler } = require('../middlewares/authHandlers')
 const config = require("../lib/config")
 const router = express.Router()
 
+// A partir de este punto se necesita token
 
-router.post('/', async (req, res, next) => {
+router.post('/', authHandler,async (req, res, next) => {
   try {
-    
+    // El payload me lo regresa authHandler
+    const {sub} = req.params.tokenPayload
     const meetData = req.body
-    const meetCreated = await meet.create(meetData)
+  
+    const meetCreated = await meet.create(meetData,sub)
     const { _id } = meetCreated
 
     res.status(201).json({
@@ -25,7 +28,27 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// A partir de este punto se necesita token
+
+// Usamos userhHandler para que solo el usuario puede modificar su propio registro
+
+router.patch('/hangout-link', async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const meetingData = req.body
+
+    const meetingUpdate = await meet.update(id, meetingData)
+    res.status(200).json({
+      status: true,
+      message: 'Update succesfully',
+      payload: {
+        userUpdate: meetingUpdate
+      }
+    })
+  } catch (err) {
+    next(err)
+    console.log(err)
+  }
+})
 
 router.use(authHandler)
 
@@ -109,6 +132,7 @@ router.patch('/:id', async (req, res, next) => {
     console.log(err)
   }
 })
+
 //Verificar como aplicaran los middlewares e.g userHandler
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
