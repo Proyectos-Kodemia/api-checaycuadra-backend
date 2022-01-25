@@ -37,10 +37,15 @@ const schema = new Schema({
     type: Number,
     minlength: 1
   },
-  degree: { // cedula
+  degree: {
     type: String,
     minlength: 1
   },
+  degreeId: { // cedula
+    type: String,
+    minlength: 1
+  },
+
   profileImage: { // imagen perfil
     type: String
   },
@@ -55,6 +60,9 @@ const schema = new Schema({
   },
   evaluation: {
     type: Number
+  },
+  specialities:{
+    type:Array
   },
   address: AddressSchema, // direccion
   Schedule: ScheduleSchema // horario

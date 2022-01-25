@@ -41,6 +41,7 @@ router.patch('/callback',authHandler, async (req, res, next) => {
         console.log("los tokens:",tokens)
 
         const saveTokens = await users.updateTokens(sub,tokens)
+        
         // console.log("los token salvados", saveTokens)
         // // if(role==="cliente"){
         //     const saveTokens = await user.getTokens(userId,tokens)
