@@ -14,14 +14,14 @@ const UserSchema = new Schema({
   },
   name: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     minlength: 1
 
   },
   lastname: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     minlength: 1
   },
@@ -41,7 +41,7 @@ const UserSchema = new Schema({
     required: false,
     minlength: 1
   },
-  telephone: {
+  phone: {
     type: Number,
     minlength: 1
   },
