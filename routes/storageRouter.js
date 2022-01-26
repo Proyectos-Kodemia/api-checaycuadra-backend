@@ -42,7 +42,8 @@ router.post('/',upload.single('file'), async (req, res, next) => {
         ok: true,
         message: 'File Created successfully',
         payload: {
-          _id
+          _id,
+          urlImgage
         }
       })
     } catch (err) {

@@ -29,12 +29,11 @@ router.post('/auth', async (req, res, next) => {
   })
 
   // patch que recibe el code del front
-router.patch('/callback',authHandler, async (req, res, next) => {
+router.post('/callback',authHandler, async (req, res, next) => {
     try {
-        const {role} = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
 
         const {sub} = req.params.tokenPayload   
-        const code = req.query.code
+        const code = req.body
         console.log("aqui el code:",code)
         
         const tokens = await google.getTokens(code)
@@ -53,7 +52,6 @@ router.patch('/callback',authHandler, async (req, res, next) => {
         ok: true,
         payload: {
           message: "Usuario autenticado correctamente",
-          tokens: tokens
         }
       })
     } catch (err) {
