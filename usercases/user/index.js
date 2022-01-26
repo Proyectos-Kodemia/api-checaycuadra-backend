@@ -39,11 +39,10 @@ const logIn = async (email, password) => {
   if (isValid) {
    
     const payload = {
-      sub: userObject._id,
-      role: userObject.role
+      sub: userObject._id
     }
     const token = await jwt.sign(payload)
-
+    console.log(token)
     return token
 
 

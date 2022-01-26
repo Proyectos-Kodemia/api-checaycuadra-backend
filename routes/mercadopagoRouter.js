@@ -21,10 +21,9 @@ mercadopago.configure({
 router.post('/checkout', async (req, res, next) => {
     try {
           // Traer información del servicio a comprar
-
+          const {id}=req.body
           // Parametros de la compra
-          console.log(req)
-
+          
           console.log(req.body)
           // const request = JSON.parse(req.body)
 
@@ -38,9 +37,9 @@ router.post('/checkout', async (req, res, next) => {
               }
             ],
             back_urls:{ // Va al front para señalar cual fue el status del pago
-              success:"http://localhost:4000/principal/Cita",
-              failure:"http://localhost:4000/principal/Cita",
-              pending:"http://localhost:4000/principal/Cita"
+              success:`http://localhost:4000/principal/cita/${id}`,
+              failure:`http://localhost:4000/principal/cita/${id}`,
+              pending:`http://localhost:4000/principal/cita/${id}`
             },
             auto_return:'approved',
           };
