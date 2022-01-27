@@ -35,6 +35,7 @@ router.post('/users', async (req, res, next) => {
     console.log(email, password)
 
     const token = await user.logIn(email, password)
+    console.log(token)
     if (token) {
       res.status(200).json({
         status: true,

@@ -37,13 +37,15 @@ const logIn = async (email, password) => {
   const isValid = await encrypt.verifyPassword(password, hash)
 
   if (isValid) {
+   
     const payload = {
-      sub: userObject._id,
-      role: userObject.role
+      sub: userObject._id
     }
-
     const token = await jwt.sign(payload)
+    console.log(token)
     return token
+
+
   } else {
     console.log('error desde login usuario usecase')
     return false

@@ -8,13 +8,26 @@ router.get('/:id', async (req, res, next) => {
   try {
     console.log('entro en id')
     const { id } = req.params
+    console.log(id)
+
     if (id) {
       const accountObject = await account.getById(id)
+      console.log(accountObject)
       res.status(200).json({
         id: accountObject.id,
-        userName: accountObject.username
+        name: accountObject.name,
+        lastname:accountObject.lastname,
+        degree:accountObject.degree,
+        degreeId:accountObject.degreeId,
+        profileImage:accountObject.profileImage,
+        description:accountObject.description,
+        role:accountObject.role,
+        evaluation:accountObject.evaluation,
+        specialities:accountObject.specialities,
+        address:accountObject.address,
+        Schedule:accountObject.Schedule,
       })
-    } else {
+    }else {
       res.status(404).json({
         status: false,
         message: 'Id not Found'
@@ -28,6 +41,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
+     const { id } = req.params
+ 
     if (req.query.name) {
       const searchUser = req.query.name
       const accountGet = await account.getByName(searchUser)
