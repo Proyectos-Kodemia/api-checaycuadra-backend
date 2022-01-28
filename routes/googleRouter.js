@@ -28,7 +28,7 @@ router.post('/auth', async (req, res, next) => {
 // patch que recibe el code del front
 router.patch('/callback', authHandler, async (req, res, next) => {
   try {
-    // console.log('')
+    console.log('entro en el callback google')
     const { role } = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
 
     const { sub } = req.params.tokenPayload
@@ -40,7 +40,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
 
     const saveTokens = await users.updateTokens(sub, tokens)
 
-    // console.log("los token salvados", saveTokens)
+    // //console.log("los token salvados", saveTokens)
     // // if(role==="cliente"){
     //     const saveTokens = await user.getTokens(userId,tokens)
     // }else{
@@ -56,7 +56,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
     res.status(400).json({
       ok: false,
       payload: {
@@ -77,7 +77,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
 //     })
 //   } catch (err) {
 //     next(err)
-//     console.log(err)
+//     //console.log(err)
 //   }
 // })
 

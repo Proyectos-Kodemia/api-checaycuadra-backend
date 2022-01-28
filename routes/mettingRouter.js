@@ -24,7 +24,7 @@ router.post('/', authHandler, async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -45,7 +45,7 @@ router.patch('/hangout-link', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -66,7 +66,7 @@ router.get('/:id', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -85,7 +85,7 @@ router.get('/client/:id', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -104,7 +104,7 @@ router.get('/account/:id', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -125,7 +125,7 @@ router.patch('/:id', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -144,7 +144,7 @@ router.delete('/:id', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 

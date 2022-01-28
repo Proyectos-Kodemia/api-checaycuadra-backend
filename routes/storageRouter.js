@@ -6,11 +6,11 @@ const upload = require('../lib/multer')
 
 router.post('/', upload.single('file'), async (req, res, next) => {
   try {
-    console.log('tipo de dato:', typeof (req.body))
-    console.log(req.body)
+    //console.log('tipo de dato:', typeof (req.body))
+    //console.log(req.body)
 
     const fileData = JSON.parse(req.body.data)
-    console.log('file json parse', fileData)
+    //console.log('file json parse', fileData)
     const file = req.file
     /*
       if (!file) {
@@ -43,7 +43,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 

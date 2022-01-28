@@ -41,10 +41,10 @@ const logIn = async (email, password) => {
       sub: userObject._id
     }
     const token = await jwt.sign(payload)
-    // console.log(token)
+    // //console.log(token)
     return token
   } else {
-    console.log('error desde login usuario usecase')
+    //console.log('error desde login usuario usecase')
     return false
   }
 }

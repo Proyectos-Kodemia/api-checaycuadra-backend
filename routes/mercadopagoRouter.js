@@ -23,7 +23,7 @@ router.post('/checkout', async (req, res, next) => {
     const { id } = req.body
     // Parametros de la compra
 
-    console.log(req.body)
+    //console.log(req.body)
     // const request = JSON.parse(req.body)
 
     const preference = {
@@ -36,25 +36,25 @@ router.post('/checkout', async (req, res, next) => {
         }
       ],
       back_urls: { // Va al front para señalar cual fue el status del pago
-        success: `http://localhost:4000/principal/cita/${id}`,
-        failure: `http://localhost:4000/principal/cita/${id}`,
-        pending: `http://localhost:4000/principal/cita/${id}`
+        success: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`,
+        failure: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`,
+        pending: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`
       },
       auto_return: 'approved'
     }
 
-    console.log(preference)
+    //console.log(preference)
 
     mercadopago.preferences
       .create(preference)
       .then(function (response) {
         // En esta instancia deberás asignar el valor dentro de response.body.id por el ID de preferencia solicitado en el siguiente paso
-        console.log(response.body)
+        //console.log(response.body)
 
         res.json(response.body.sandbox_init_point)
       })
       .catch(function (error) {
-        console.log(error)
+        //console.log(error)
       })
 
     // res.status(200).json({
@@ -65,7 +65,7 @@ router.post('/checkout', async (req, res, next) => {
     // })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -78,7 +78,7 @@ router.post('/checkout', async (req, res, next) => {
 
 //   }catch (err) {
 //     next(err)
-//     console.log(err)
+//     //console.log(err)
 //   }
 // })
 

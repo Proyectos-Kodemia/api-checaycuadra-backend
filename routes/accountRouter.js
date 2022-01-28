@@ -6,13 +6,13 @@ const router = express.Router()
 
 router.get('/:id', async (req, res, next) => {
   try {
-    console.log('entro en id')
+    //console.log('entro en id')
     const { id } = req.params
-    console.log(id)
+    //console.log(id)
 
     if (id) {
       const accountObject = await account.getById(id)
-      console.log(accountObject)
+      //console.log(accountObject)
       res.status(200).json({
         id: accountObject.id,
         name: accountObject.name,
@@ -34,7 +34,7 @@ router.get('/:id', async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del GetById', err)
+    //console.log('error del GetById', err)
     next(err)
   }
 })
@@ -44,7 +44,7 @@ router.get('/', async (req, res, next) => {
     const { id } = req.params
 
     if (req.query.name) {
-      // console.log('entro en name')
+      // //console.log('entro en name')
       const searchUser = req.query.name
       const accountGet = await account.getByName(searchUser)
       res.status(200).json({
@@ -59,7 +59,7 @@ router.get('/', async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Get account', err)
+    //console.log('error del Get account', err)
     next(err)
   }
 })
@@ -69,14 +69,14 @@ router.post('/', async (req, res, next) => {
     const accountData = req.body
     const accountCreated = await account.create(accountData)
     const { _id } = accountCreated
-    console.log(accountCreated)
+    //console.log(accountCreated)
     res.status(201).json({
       status: true,
       message: 'Account Created Succesfully',
       payload: _id
     })
   } catch (err) {
-    console.log('error del post', err)
+    //console.log('error del post', err)
     next(err)
   }
 })
@@ -105,7 +105,7 @@ router.patch('/:id', async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Patch', err)
+    //console.log('error del Patch', err)
     next(err)
   }
 })
@@ -127,7 +127,7 @@ router.delete('/:id', async (res, req, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Delete', err)
+    //console.log('error del Delete', err)
     next(err)
   }
 })

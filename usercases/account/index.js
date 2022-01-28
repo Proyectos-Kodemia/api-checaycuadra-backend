@@ -11,7 +11,7 @@ const create = async (dataAccount) => {
     const savedAccount = await account.save()
     return savedAccount
   } catch (err) {
-    console.log('Error desde create usecase', err)
+    //console.log('Error desde create usecase', err)
   }
 }
 
@@ -49,7 +49,7 @@ const logIn = async (email, password) => {
     const token = await jwt.sign(payload)
     return token
   } else {
-    console.log('error desde login contador usecase')
+    //console.log('error desde login contador usecase')
     return false
   }
 }
@@ -60,21 +60,21 @@ const update = async (id, accountData) => {
   // const { costHour, dateStart, dateEnd, rangeHours } = Schedule
 
   if (address && Schedule) {
-    console.log('entro 1')
+    //console.log('entro 1')
     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule }).exec()
   }
 
   if (address) {
-    console.log('entro 2')
+    //console.log('entro 2')
     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address }).exec()
   }
 
   if (Schedule) {
-    console.log('entro 3')
+    //console.log('entro 3')
     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, Schedule }).exec()
   }
 
-  console.log('entro 4')
+  //console.log('entro 4')
   return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
 }
 
