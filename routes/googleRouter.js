@@ -29,10 +29,11 @@ router.post('/auth', async (req, res, next) => {
 router.patch('/callback', authHandler, async (req, res, next) => {
   try {
     console.log('entro en el callback google')
-    const { role } = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
+    const { code } = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
 
-    const { sub } = req.params.tokenPayload
-    const code = req.query.code
+    const { sub, role } = req.params.tokenPayload
+    console.log('sub', sub)
+    console.log('role', role)
     console.log('aqui el code:', code)
 
     const tokens = await google.getTokens(code)
@@ -56,7 +57,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    //console.log(err)
+    console.log('error', err)
     res.status(400).json({
       ok: false,
       payload: {
@@ -65,20 +66,5 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     })
   }
 })
-
-// router.post('/create-event', async (req, res, next) => {
-//   try {
-
-//     res.status(200).json({
-//       ok: true,
-//       payload: {
-//         authUrl: auth
-//       }
-//     })
-//   } catch (err) {
-//     next(err)
-//     //console.log(err)
-//   }
-// })
 
 module.exports = router

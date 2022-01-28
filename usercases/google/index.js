@@ -9,6 +9,7 @@ const authUserRedirect = async (googleClientId, googleSecret, googleRedirectUri)
 }
 
 const getTokens = async (code) => {
+  console.log('code google', code)
   return await oauth2.getTokens(code)
 }
 

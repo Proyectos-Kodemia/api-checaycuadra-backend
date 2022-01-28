@@ -36,9 +36,12 @@ router.post('/checkout', async (req, res, next) => {
         }
       ],
       back_urls: { // Va al front para señalar cual fue el status del pago
-        success: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`,
-        failure: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`,
-        pending: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`
+        // success: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`,
+        // failure: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`,
+        // pending: `https://api-checaycuadra-frontend-next.vercel.app/principal/cita/${id}`
+        success: `http://localhost:3000/principal/cita/${id}`,
+        failure: `http://localhost:3000/principal/cita/${id}`,
+        pending: `http://localhost:3000/principal/cita/${id}`
       },
       auto_return: 'approved'
     }
