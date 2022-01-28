@@ -7,8 +7,8 @@ const router = express.Router()
 router.post('/', async (req, res, next) => {
   try {
     const userData = req.body
-    
-    console.log(userData)
+
+    // console.log(userData)
 
     const userCreated = await user.create(userData)
     const { _id } = userCreated

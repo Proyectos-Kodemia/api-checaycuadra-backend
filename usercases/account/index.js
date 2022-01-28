@@ -28,7 +28,7 @@ const getByEmail = async (email) => {
 }
 
 const getByName = async (name) => {
-  return await Account.model.find({ name: { $regex: name, $options: 'ig' } }, 'email lastname name role').exec()
+  return await Account.model.find({ name: { $regex: name, $options: 'ig' } }, 'id name lastname degree profileImage description role evaluation address Schedule').exec()
 }
 
 const authenticate = async (email, password) => {

@@ -1,25 +1,25 @@
 const express = require('express')
 const meet = require('../usercases/meeting')
 const { authHandler, userHandler } = require('../middlewares/authHandlers')
-const config = require("../lib/config")
+const config = require('../lib/config')
 const router = express.Router()
 
 // A partir de este punto se necesita token
 
-router.post('/', authHandler,async (req, res, next) => {
+router.post('/', authHandler, async (req, res, next) => {
   try {
     // El payload me lo regresa authHandler
-    const {sub} = req.params.tokenPayload
+    const { sub } = req.params.tokenPayload
     const meetData = req.body
-  
-    const meetCreated = await meet.create(meetData,sub)
+
+    const meetCreated = await meet.create(meetData, sub)
     const { _id } = meetCreated
 
     res.status(201).json({
       ok: true,
       message: 'Meet Created successfully',
       payload: {
-        meetCreated,
+        meetCreated
       }
     })
   } catch (err) {
@@ -27,7 +27,6 @@ router.post('/', authHandler,async (req, res, next) => {
     console.log(err)
   }
 })
-
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 
@@ -109,9 +108,6 @@ router.get('/account/:id', async (req, res, next) => {
   }
 })
 
-
-
-
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 // Path with meeting Id
 router.patch('/:id', async (req, res, next) => {
@@ -133,7 +129,7 @@ router.patch('/:id', async (req, res, next) => {
   }
 })
 
-//Verificar como aplicaran los middlewares e.g userHandler
+// Verificar como aplicaran los middlewares e.g userHandler
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   try {

@@ -16,9 +16,9 @@ const apiRouter = (app) => {
   // app.use("/message", messageRouter);
   app.use('/metting', mettingRouter)
   // app.use("/service", serviceRouter);
-  app.use('/storage/',storageRouter)
-  app.use('/google',googleRouter)
-  app.use('/mercadopago',mercadopagoRouter)
+  app.use('/storage/', storageRouter)
+  app.use('/google', googleRouter)
+  app.use('/mercadopago', mercadopagoRouter)
   app.use('/users', userRouter)
 }
 

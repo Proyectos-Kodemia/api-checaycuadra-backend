@@ -37,15 +37,12 @@ const logIn = async (email, password) => {
   const isValid = await encrypt.verifyPassword(password, hash)
 
   if (isValid) {
-   
     const payload = {
       sub: userObject._id
     }
     const token = await jwt.sign(payload)
-    console.log(token)
+    // console.log(token)
     return token
-
-
   } else {
     console.log('error desde login usuario usecase')
     return false
@@ -68,14 +65,14 @@ const del = async (userId) => {
   return await User.model.findByIdAndDelete(userId).exec()
 }
 
-module.exports = { 
-  create, 
-  get, 
-  getById, 
-  getByEmail, 
-  authenticate, 
-  logIn, 
-  update, 
+module.exports = {
+  create,
+  get,
+  getById,
+  getByEmail,
+  authenticate,
+  logIn,
+  update,
   del,
-  updateTokens 
+  updateTokens
 }

@@ -2,17 +2,17 @@ const Storage = require('../../models/storage')
 
 const create = async (dataFiles) => {
   // {fileData: {...}. linkAWS: "https://"}
-  const { idUpload, nameDocument,description,comments,linkAWS} = dataFiles
-  const date = await new Date
+  const { idUpload, nameDocument, description, comments, linkAWS } = dataFiles
+  const date = await new Date()
 
-  const files = new Storage.model({ idUpload, nameDocument, description,comments,Date: date,linkAWS })
+  const files = new Storage.model({ idUpload, nameDocument, description, comments, Date: date, linkAWS })
 
   const filesSaved = await files.save()
   return filesSaved
 }
 
-const updateById = async(id, dataFile) =>{
-  const fileUpdated = Storage.model.findByIdAndUpdate(id, dataFile, {new:true})
+const updateById = async (id, dataFile) => {
+  const fileUpdated = Storage.model.findByIdAndUpdate(id, dataFile, { new: true })
   return fileUpdated
 }
 
@@ -62,4 +62,4 @@ const del = async (userId) => {
   return await User.model.findByIdAndDelete(userId).exec()
 }
 
-module.exports = { create, updateById,get, getById, getByEmail, authenticate, logIn, update, del }
+module.exports = { create, updateById, get, getById, getByEmail, authenticate, logIn, update, del }

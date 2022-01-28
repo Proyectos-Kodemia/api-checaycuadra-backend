@@ -1,31 +1,31 @@
 const Meeting = require('../../models/meeting')
 const linkMeet = require('google-meet-api').meet // con esta libreria se crea el link del google meet
-const { google } = require("googleapis")
-const randomstring= require("randomstring")
+const { google } = require('googleapis')
+const randomstring = require('randomstring')
 const config = require('../../lib/config')
 const userCase = require('../user')
 const accountCase = require('../account')
 
-const create = async (meetData,sub) => {
+const create = async (meetData, sub) => {
   const user = sub
-  const { userAccount, title, startDateTime,endDateTime, unit_price, quantity,statusPayment} = meetData
+  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
 
   // Guardando cita en la base de datos
-  const meeting = new Meeting.model({user, userAccount, startDateTime,endDateTime, title, quantity,unit_price,statusPayment})
+  const meeting = new Meeting.model({ user, userAccount, startDateTime, endDateTime, title, quantity, unit_price, statusPayment })
 
   const savedMeeting = await meeting.save()
-  
+
   return savedMeeting
 }
 
-const createLink = async (meetData,sub) => {
+const createLink = async (meetData, sub) => {
   const user = sub
-  const { userAccount, service, startDateTime,endDateTime, total} = meetData
+  const { userAccount, service, startDateTime, endDateTime, total } = meetData
   const summary = `Cita para el servicio de ${service}`
-  const description = `Cita creada por Checa y Cuadra`
+  const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
 
-  const {refreshToken} = await userCase.getById(user)
+  const { refreshToken } = await userCase.getById(user)
 
   const googleClientId = config.google.clientId
   const googleSecret = config.google.secret
@@ -35,56 +35,56 @@ const createLink = async (meetData,sub) => {
     googleClientId,
     googleSecret,
     googleRedirectUri
-    )
+  )
 
-    // Setting user credentials
-  oauth2Client.setCredentials({refresh_token:refreshToken})
+  // Setting user credentials
+  oauth2Client.setCredentials({ refresh_token: refreshToken })
   const requestId = randomstring.generate()
 
-    // Obtener email del contador
-    const {email} = await accountCase.getById(userAccount)
+  // Obtener email del contador
+  const { email } = await accountCase.getById(userAccount)
 
   // Crear evento
   const calendar = google.calendar('v3')
   const meetGoogle = await calendar.events.insert({
-    auth:oauth2Client,
-    calendarId:'primary',
-    conferenceDataVersion:1,
-    requestBody:{
-      summary:summary,
-      description:description,
-      colorId:'7',
-      start:{
+    auth: oauth2Client,
+    calendarId: 'primary',
+    conferenceDataVersion: 1,
+    requestBody: {
+      summary: summary,
+      description: description,
+      colorId: '7',
+      start: {
         dateTime: new Date(startDateTime),
-        timezone:'America/Mexico_City'
+        timezone: 'America/Mexico_City'
       },
-      end:{
+      end: {
         dateTime: new Date(endDateTime),
-        timezone:'America/Mexico_City'
+        timezone: 'America/Mexico_City'
       },
-      attendees:[
-        {email:email}
+      attendees: [
+        { email: email }
       ],
-      
-      conferenceData:{
-        createRequest:{
+
+      conferenceData: {
+        createRequest: {
           requestId: requestId,
-          conferenceSolutionKey:{
-            type:'hangoutsMeet'
+          conferenceSolutionKey: {
+            type: 'hangoutsMeet'
           }
-          
+
         }
       }
     }
   })
-  
-  const {hangoutLink} = meetGoogle.data
+
+  const { hangoutLink } = meetGoogle.data
 
   // Guardando cita en la base de datos
-  const meeting = new Meeting.model({user, userAccount, startDateTime,endDateTime, service, total,hangoutLink})
+  const meeting = new Meeting.model({ user, userAccount, startDateTime, endDateTime, service, total, hangoutLink })
 
   const savedMeeting = await meeting.save()
-  
+
   return savedMeeting
 }
 
@@ -97,11 +97,11 @@ const getById = async (id) => {
 }
 
 const getByUserClient = async (id) => {
-  return await Meeting.model.find({user: id}).exec()
+  return await Meeting.model.find({ user: id }).exec()
 }
 
 const getByUserAccount = async (id) => {
-  return await Meeting.model.find({userAccount: id}).exec()
+  return await Meeting.model.find({ userAccount: id }).exec()
 }
 
 const update = async (meetingId, meetingData) => {
