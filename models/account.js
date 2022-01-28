@@ -1,64 +1,79 @@
-const AddressSchema = require("./utils/address")
-const ScheduleSchema = require("./utils/schedule")
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
-
+const AddressSchema = require('./utils/address')
+const ScheduleSchema = require('./utils/schedule')
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const schema = new Schema({
-  id: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1,
-  },
   username: {
     type: String,
-    required: true,
     trim: true,
     maxlength: 25,
-    minlength: 1,
-    unique: true,
+    minlength: 1
   },
   name: {
     type: String,
     required: true,
     trim: true,
-    minlength: 1,
+    minlength: 1
+  },
+  lastname: {
+    type: String,
+    trim: true,
+    minlength: 1
   },
   password: {
     type: String,
     required: true,
-    minlength: 1,
+    minlength: 1
   },
   email: {
     type: String,
     required: true,
     minlength: 1,
+    unique: true,
+    trim: true
   },
   telephone: {
     type: Number,
-    minlength: 1,
+    minlength: 1
   },
-  degree: { //cedula
+  degree: {
     type: String,
-    minlength: 1,
+    minlength: 1
   },
-  profileImage: { //imagen perfil
+  degreeId: { // cedula
     type: String,
+    minlength: 1
+  },
+
+  profileImage: { // imagen perfil
+    type: String
   },
   description: {
     type: String,
-    minlength: 1,
+    minlength: 1
   },
+  role: {
+    type: String,
+    minlength: 1,
+    required: true
+  },
+  evaluation: {
+    type: Number
+  },
+  specialities:{
+    type:Array
+  },
+  address: AddressSchema, // direccion
+  Schedule: ScheduleSchema // horario
+  // address: { type: Schema.ObjectId, ref: 'Address' }, // direccion
+  // Schedule: { type: Schema.ObjectId, ref: 'schedule' } // horario
 
-  address: AddressSchema, //direccion
-
-  Schedule: ScheduleSchema, //horario
 }, {
   timestamp: true
-});
+})
 
 module.exports = {
-  model: mongoose.model("Account", schema),
-  schema,
-};
+  model: mongoose.model('Account', schema),
+  schema
+}

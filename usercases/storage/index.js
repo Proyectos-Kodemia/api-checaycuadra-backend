@@ -1,16 +1,19 @@
-const User = require('../../models/users')
-const encrypt = require('../../lib/crypt')
-const jwt = require('../../lib/jwt')
+const Storage = require('../../models/storage')
 
-const create = async (dataUser) => {
-  const { password, email, role, name, lastname } = dataUser
-  const hash = await encrypt.hashPassword(password)
+const create = async (dataFiles) => {
+  // {fileData: {...}. linkAWS: "https://"}
+  const { idUpload, nameDocument, description, comments, linkAWS } = dataFiles
+  const date = await new Date()
 
-  const user = new User.model({ password: hash, email, role, name, lastname })
-  // if role usando user( userId)
+  const files = new Storage.model({ idUpload, nameDocument, description, comments, Date: date, linkAWS })
 
-  const savedUser = await user.save()
-  return savedUser
+  const filesSaved = await files.save()
+  return filesSaved
+}
+
+const updateById = async (id, dataFile) => {
+  const fileUpdated = Storage.model.findByIdAndUpdate(id, dataFile, { new: true })
+  return fileUpdated
 }
 
 const get = async () => {
@@ -38,10 +41,11 @@ const logIn = async (email, password) => {
 
   if (isValid) {
     const payload = {
-      sub: userObject._id
+      sub: userObject._id,
+      role: userObject.role
     }
+
     const token = await jwt.sign(payload)
-    // console.log(token)
     return token
   } else {
     console.log('error desde login usuario usecase')
@@ -54,25 +58,8 @@ const update = async (userId, userData) => {
   return await User.model.findByIdAndUpdate(userId, { username, name }).exec()
 }
 
-const updateTokens = async (userId, tokens) => {
-  const accessToken = tokens.access_token
-  const refreshToken = tokens.refresh_token
-
-  return await User.model.findByIdAndUpdate(userId, { accessToken, refreshToken }).exec()
-}
-
 const del = async (userId) => {
   return await User.model.findByIdAndDelete(userId).exec()
 }
 
-module.exports = {
-  create,
-  get,
-  getById,
-  getByEmail,
-  authenticate,
-  logIn,
-  update,
-  del,
-  updateTokens
-}
+module.exports = { create, updateById, get, getById, getByEmail, authenticate, logIn, update, del }
