@@ -8,7 +8,7 @@ const router = express.Router()
 const mercadopago = require('mercadopago')
 
 // middleware
-const port_Front = config.app_Front.port
+const portFront = config.appFront.port
 
 // agregar credenciales
 const secretMercadoPago = config.mercadopago.secret
@@ -38,9 +38,9 @@ router.post('/checkout', async (req, res, next) => {
         }
       ],
       back_urls: { // Va al front para señalar cual fue el status del pago
-        success: `${port_Front}/principal/cita/${id}`,
-        failure: `${port_Front}/principal/cita/${id}`,
-        pending: `${port_Front}/principal/cita/${id}`
+        success: `${portFront}/principal/cita/${id}`,
+        failure: `${portFront}/principal/cita/${id}`,
+        pending: `${portFront}/principal/cita/${id}`
       },
       auto_return: 'approved'
     }

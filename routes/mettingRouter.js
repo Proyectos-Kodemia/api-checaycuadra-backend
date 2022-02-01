@@ -30,17 +30,17 @@ router.post('/', authHandler, async (req, res, next) => {
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 
-router.patch('/hangout-link', async (req, res, next) => {
+router.patch('/hangout-link',authHandler, async (req, res, next) => {
   try {
-    const { id } = req.params
-    const meetingData = req.body
+    const { sub } = req.params.tokenPayload
+    const idMeeting = req.body
 
-    const meetingUpdate = await meet.update(id, meetingData)
+    const meetingWithLink = await meet.createLink(idMeeting, sub)
     res.status(200).json({
       status: true,
-      message: 'Update succesfully',
+      message: 'Meeting link create succesfully',
       payload: {
-        userUpdate: meetingUpdate
+        Meeting: meetingWithLink
       }
     })
   } catch (err) {
