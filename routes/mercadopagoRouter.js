@@ -3,10 +3,12 @@ const { authHandler, userHandler } = require('../middlewares/authHandlers')
 const config = require('../lib/config')
 const router = express.Router()
 
+
 // SDK de Mercado Pago
 const mercadopago = require('mercadopago')
 
 // middleware
+const port_Front = config.app_Front.port
 
 // agregar credenciales
 const secretMercadoPago = config.mercadopago.secret
@@ -36,9 +38,9 @@ router.post('/checkout', async (req, res, next) => {
         }
       ],
       back_urls: { // Va al front para señalar cual fue el status del pago
-        success: `http://localhost:4000/principal/cita/${id}`,
-        failure: `http://localhost:4000/principal/cita/${id}`,
-        pending: `http://localhost:4000/principal/cita/${id}`
+        success: `${port_Front}/principal/cita/${id}`,
+        failure: `${port_Front}/principal/cita/${id}`,
+        pending: `${port_Front}/principal/cita/${id}`
       },
       auto_return: 'approved'
     }

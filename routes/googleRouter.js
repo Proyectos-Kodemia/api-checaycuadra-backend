@@ -28,11 +28,11 @@ router.post('/auth', async (req, res, next) => {
 // patch que recibe el code del front
 router.patch('/callback', authHandler, async (req, res, next) => {
   try {
-    // console.log('')
-    const { role } = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
+    console.log('entro a callback')
 
     const { sub } = req.params.tokenPayload
-    const code = req.query.code
+    console.log(sub)
+    const code = req.body
     console.log('aqui el code:', code)
 
     const tokens = await google.getTokens(code)
@@ -56,11 +56,11 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    console.log('error desde next googleRouter', err)
     res.status(400).json({
       ok: false,
       payload: {
-        message: 'Usuario no autenticado, intente nuevamente'
+        message: err
       }
     })
   }
