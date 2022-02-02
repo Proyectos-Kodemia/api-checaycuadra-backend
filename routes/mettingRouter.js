@@ -33,8 +33,8 @@ router.post('/', authHandler, async (req, res, next) => {
 router.patch('/hangout-link',authHandler, async (req, res, next) => {
   try {
     const { sub } = req.params.tokenPayload
-    const idMeeting = req.body
-
+    const {idMeeting} = req.body
+    console.log("aqui el id Meeting",idMeeting)
     const meetingWithLink = await meet.createLink(idMeeting, sub)
     res.status(200).json({
       status: true,

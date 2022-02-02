@@ -1,4 +1,5 @@
 const Meeting = require('../../models/meeting')
+const schema = require('../../models/meeting')
 const linkMeet = require('google-meet-api').meet // con esta libreria se crea el link del google meet
 const { google } = require('googleapis')
 const randomstring = require('randomstring')
@@ -6,9 +7,10 @@ const config = require('../../lib/config')
 const userCase = require('../user')
 const accountCase = require('../account')
 
-// const mongoose = require('mongoose');
+// const { ObjectId } = require('mongodb')
+const mongoose = require('mongoose');
 // const Schema = mongoose.Schema;
-// const ObjectId = Schema.Types.ObjectId
+const ObjectId = mongoose.Types.ObjectId
 
 
 const create = async (meetData, sub) => {
@@ -28,8 +30,11 @@ const getById = async (id) => {
 }
 
 const createLink = async (id,user) => {
-  // const idMeeting = ObjectId.toString(id)
   const idMeeting = id
+  // const idMeeting = mongoose.Types.ObjectId.createFromHexString(id)
+  // const idMeeting = mongoose.mongo.BSONPure.ObjectId.fromHexString(id)
+  
+  // const idMeeting = id
   const meetData = await Meeting.model.findById(idMeeting).exec()
 
   const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment} = meetData
@@ -91,9 +96,9 @@ const createLink = async (id,user) => {
   })
 
   const { hangoutLink } = meetGoogle.data
-
+  console.log(hangoutLink)
   // Guardando cita en la base de datos
-  const meetingWithLink = await Meeting.model.findByIdAndUpdate(IdMeeting,{hangoutLink }).exec()
+  const meetingWithLink = await Meeting.model.findByIdAndUpdate(idMeeting,{hangoutLink }).exec()
 
   return meetingWithLink
 }
