@@ -67,9 +67,10 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const accountData = req.body
+    console.log(accountData)
     const accountCreated = await account.create(accountData)
     const { _id } = accountCreated
-    console.log(accountCreated)
+    console.log('cuenta creada', accountCreated)
     res.status(201).json({
       status: true,
       message: 'Account Created Succesfully',

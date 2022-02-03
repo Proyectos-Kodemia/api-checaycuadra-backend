@@ -4,14 +4,15 @@ const jwt = require('../../lib/jwt')
 
 const create = async (dataAccount) => {
   // const {id, username, name, password, email, telephone, degree, profileImage, description} = dataAccount
-  const { name, lastname, password, email, telephone, role } = dataAccount
+  const { name, lastname, email, password, telephone } = dataAccount
   try {
+    const role = 'account'
     const hash = await encrypt.hashPassword(password)
     const account = new Account.model({ name, lastname, password: hash, email, telephone, role })
     const savedAccount = await account.save()
     return savedAccount
   } catch (err) {
-    console.log('Error desde create usecase', err)
+    console.log('Error desde create usecase account', err)
   }
 }
 
