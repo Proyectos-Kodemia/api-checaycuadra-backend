@@ -56,27 +56,58 @@ const logIn = async (email, password) => {
 }
 
 const update = async (id, accountData) => {
-  const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
+  console.log("completo data",accountData)
+  const {
+    nombre:name,
+    apellidos:lastname,
+    estado:state,
+    municipio:town,
+    cp:cp,
+    precio:costHour,
+    cedula:degreeId,
+    formacion:degree,
+    especialidades:specialities,
+    acercade:description,
+    email:gmail
+  } = accountData
+
+  
+  console.log(name,lastname,state)
+ 
+    const address ={ 
+      cp,
+      state,
+      town
+  }
+ 
+    
+  
+    const Schedule={
+      costHour
+    }
+  
+  const updateObject = { }
+  // const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
   // const { street, interiorNumber, outdoorNumber, district, town, state, cp } = accountData.address
   // const { costHour, dateStart, dateEnd, rangeHours } = Schedule
 
   if (address && Schedule) {
     console.log('entro 1')
-    return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree,degreeId, description, specialities,gmail,address, Schedule }).exec()
   }
 
-  if (address) {
-    console.log('entro 2')
-    return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address }).exec()
-  }
+  // if (address) {
+  //   console.log('entro 2')
+  //   return await Account.model.findByIdAndUpdate(id, { name, lastname, password, email, telephone, degree, degreeId, profileImage, description, role, evaluation, address }).exec()
+  // }
 
-  if (Schedule) {
-    console.log('entro 3')
-    return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, Schedule }).exec()
-  }
+  // if (Schedule) {
+  //   console.log('entro 3')
+  //   return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, degreeId, profileImage, description, role, evaluation, Schedule }).exec()
+  // }
 
-  console.log('entro 4')
-  return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
+  // console.log('entro 4')
+  // return await Account.model.findByIdAndUpdate(id, { name, lastname, password, email, telephone, degree,degreeId, profileImage, description, role, evaluation }).exec()
 }
 
 module.exports = { get, getById, getByEmail, getByName, update, create, logIn, authenticate }

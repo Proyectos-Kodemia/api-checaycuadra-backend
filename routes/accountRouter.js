@@ -3,6 +3,7 @@ const express = require('express')
 const account = require('../usercases/account')
 
 const router = express.Router()
+const {authHandler} = require('../middlewares/authHandlers')
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -81,33 +82,33 @@ router.post('/', async (req, res, next) => {
 })
 module.exports = router
 
-router.patch('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params
-    if (id) {
-      const accountData = req.body
+// router.patch('/:id', async (req, res, next) => {
+//   try {
+//     const { id } = req.params
+//     if (id) {
+//       const accountData = req.body
 
-      const accountUpdate = await account.update(id, accountData)
-      res.status(200).json({
-        status: true,
-        message: 'Update Successfully',
-        payload: {
-          Id: accountUpdate._id,
-          name: accountUpdate.name,
-          role: accountUpdate.role
-        }
-      })
-    } else {
-      res.status(404).json({
-        status: false,
-        message: 'Id not Found'
-      })
-    }
-  } catch (err) {
-    console.log('error del Patch', err)
-    next(err)
-  }
-})
+//       const accountUpdate = await account.update(id, accountData)
+//       res.status(200).json({
+//         status: true,
+//         message: 'Update Successfully',
+//         payload: {
+//           Id: accountUpdate._id,
+//           name: accountUpdate.name,
+//           role: accountUpdate.role
+//         }
+//       })
+//     } else {
+//       res.status(404).json({
+//         status: false,
+//         message: 'Id not Found'
+//       })
+//     }
+//   } catch (err) {
+//     console.log('error del Patch', err)
+//     next(err)
+//   }
+// })
 
 router.delete('/:id', async (res, req, next) => {
   try {
@@ -127,6 +128,40 @@ router.delete('/:id', async (res, req, next) => {
     }
   } catch (err) {
     console.log('error del Delete', err)
+    next(err)
+  }
+
+})
+
+router.patch('/perfil', authHandler, async (req, res, next) => {
+  console.log("entra al patch")
+  const { sub } = req.params.tokenPayload
+  console.log(sub)
+  try {
+    const { sub } = req.params.tokenPayload
+    console.log("id en patch perfil", sub)
+
+    if (sub) {
+      const accountData = req.body
+      
+      console.log("recibiendo la data",accountData)
+
+      const accountUpdate = await account.update(sub, accountData)
+      res.status(200).json({
+        status: true,
+        message: 'Update Successfully',
+        payload: {
+          accountUpdate
+        }
+      })
+    } else {
+      res.status(404).json({
+        status: false,
+        message: 'Id not Found'
+      })
+    }
+  } catch (err) {
+    console.log('error del Patch', err)
     next(err)
   }
 })
