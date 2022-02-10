@@ -80,7 +80,7 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
-module.exports = router
+
 
 // router.patch('/:id', async (req, res, next) => {
 //   try {
@@ -165,3 +165,5 @@ router.patch('/perfil', authHandler, async (req, res, next) => {
     next(err)
   }
 })
+
+module.exports = router
