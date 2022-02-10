@@ -33,6 +33,13 @@ const schema = new Schema({
     unique: true,
     trim: true
   },
+  gmail: {
+    type: String,
+    required: false,
+    minlength: 1,
+    unique: true,
+    trim: true
+  },
   telephone: {
     type: Number,
     minlength: 1

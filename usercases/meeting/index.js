@@ -1,10 +1,17 @@
 const Meeting = require('../../models/meeting')
+const schema = require('../../models/meeting')
 const linkMeet = require('google-meet-api').meet // con esta libreria se crea el link del google meet
 const { google } = require('googleapis')
 const randomstring = require('randomstring')
 const config = require('../../lib/config')
 const userCase = require('../user')
 const accountCase = require('../account')
+
+// const { ObjectId } = require('mongodb')
+const mongoose = require('mongoose');
+// const Schema = mongoose.Schema;
+const ObjectId = mongoose.Types.ObjectId
+
 
 const create = async (meetData, sub) => {
   const user = sub
@@ -18,10 +25,20 @@ const create = async (meetData, sub) => {
   return savedMeeting
 }
 
-const createLink = async (meetData, sub) => {
-  const user = sub
-  const { userAccount, service, startDateTime, endDateTime, total } = meetData
-  const summary = `Cita para el servicio de ${service}`
+const getById = async (id) => {
+  return await Meeting.model.findById(id).exec()
+}
+
+const createLink = async (id,user) => {
+  const idMeeting = id
+  // const idMeeting = mongoose.Types.ObjectId.createFromHexString(id)
+  // const idMeeting = mongoose.mongo.BSONPure.ObjectId.fromHexString(id)
+  
+  // const idMeeting = id
+  const meetData = await Meeting.model.findById(idMeeting).exec()
+
+  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment} = meetData
+  const summary = `Cita para el servicio de ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
 
@@ -79,22 +96,18 @@ const createLink = async (meetData, sub) => {
   })
 
   const { hangoutLink } = meetGoogle.data
-
+  console.log(hangoutLink)
   // Guardando cita en la base de datos
-  const meeting = new Meeting.model({ user, userAccount, startDateTime, endDateTime, service, total, hangoutLink })
+  const meetingWithLink = await Meeting.model.findByIdAndUpdate(idMeeting,{hangoutLink }).exec()
 
-  const savedMeeting = await meeting.save()
-
-  return savedMeeting
+  return meetingWithLink
 }
 
 const getAll = async () => {
   return await Meeting.model.find({}).exec()
 }
 
-const getById = async (id) => {
-  return await Meeting.model.findById(id).exec()
-}
+
 
 const getByUserClient = async (id) => {
   return await Meeting.model.find({ user: id }).exec()

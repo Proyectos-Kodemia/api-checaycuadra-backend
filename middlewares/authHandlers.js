@@ -3,6 +3,7 @@ const jwt = require('../lib/jwt')
 const authHandler = async (req, res, next) => {
   const { token } = req.headers
   console.log('entro al authhandler')
+  console.log(token)
   try {
     const payload = await jwt.verifyToken(token)
     if (payload) {
