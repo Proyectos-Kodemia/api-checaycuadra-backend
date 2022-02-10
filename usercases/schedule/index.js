@@ -9,8 +9,19 @@ const create = async (dataSchedule) => {
     } catch (err) {
       console.log('Error desde create schedule', err)
     }
-  }
+}
 
-  const get = async () => {
+const get = async () => {
     return await Account.model.find({}, 'id name lastname degree profileImage description role evaluation address Schedule ').exec()
-  }
+}
+
+const update = async (userId, userData) => {
+    const { username, name } = userData
+    return await User.model.findByIdAndUpdate(userId, { username, name }).exec()
+}
+
+module.exports = { 
+      get, 
+      update, 
+      create
+    }

@@ -13,7 +13,7 @@ const ScheduleSchema = new Schema({
   hoursAvailable: { // 18-20 hrs
     type: String,
     required: false
-  },
+  }
 }, {
   timestamp: true
 })
