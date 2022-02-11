@@ -61,8 +61,8 @@ const schema = new Schema({
   evaluation: {
     type: Number
   },
-  specialities:{
-    type:Array
+  specialities: {
+    type: Array
   },
   address: AddressSchema, // direccion
   Schedule: ScheduleSchema // horario

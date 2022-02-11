@@ -32,6 +32,11 @@ const getByName = async (name) => {
   return await Account.model.find({ name: { $regex: name, $options: 'ig' } }, 'id name lastname degree profileImage description role evaluation address Schedule').exec()
 }
 
+const getBySpecialities = async (data) => {
+  console.log('buscando especialidad', data)
+  return await Account.model.find({ specialities: { $all: [data]  } }, 'id name lastname degree profileImage description role evaluation address Schedule specialities').exec()
+}
+
 const authenticate = async (email, password) => {
   const hash = email.password
   return await encrypt.verifyPassword(password, hash)
@@ -79,4 +84,4 @@ const update = async (id, accountData) => {
   return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
 }
 
-module.exports = { get, getById, getByEmail, getByName, update, create, logIn, authenticate }
+module.exports = { get, getById, getByEmail, getByName, update, create, logIn, authenticate, getBySpecialities }

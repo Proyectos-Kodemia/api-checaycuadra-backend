@@ -41,7 +41,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const { id } = req.params
+    // const { id } = req.params
+    console.log('entro en el get')
 
     if (req.query.name) {
       // console.log('entro en name')
@@ -50,6 +51,16 @@ router.get('/', async (req, res, next) => {
       res.status(200).json({
         status: true,
         payload: accountGet
+      })
+    } else if (req.query.specialities) {
+      console.log('entro en especialidad')
+      console.log(req.query.specialities)
+      const searchSpecialities = req.query.specialities
+      const specialitiesGet = await account.getBySpecialities(searchSpecialities)
+      console.log(specialitiesGet)
+      res.status(200).json({
+        status: true,
+        payload: specialitiesGet
       })
     } else {
       const accountGet = await account.get()
