@@ -68,6 +68,12 @@ const schema = new Schema({
   evaluation: {
     type: Number
   },
+  accessToken: {
+    type: String
+  },
+  refreshToken: {
+    type: String
+  },
   specialities:{
     type:Array
   },

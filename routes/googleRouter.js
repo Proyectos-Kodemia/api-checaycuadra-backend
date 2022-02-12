@@ -3,7 +3,7 @@ const google = require('../usercases/google')
 const { authHandler, userHandler } = require('../middlewares/authHandlers')
 const config = require('../lib/config')
 const router = express.Router()
-const users = require('../usercases/user')
+const account = require('../usercases/account')
 
 router.post('/auth', async (req, res, next) => {
   try {
@@ -38,7 +38,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     const tokens = await google.getTokens(code)
     console.log('los tokens:', tokens)
 
-    const saveTokens = await users.updateTokens(sub, tokens)
+    const saveTokens = await account.updateTokens(sub, tokens)
 
     // console.log("los token salvados", saveTokens)
     // // if(role==="cliente"){
@@ -50,7 +50,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     res.status(200).json({
       ok: true,
       payload: {
-        message: 'Usuario autenticado correctamente',
+        message: 'Usuario autenticado correctamente, tokens salvados',
         tokens: tokens
       }
     })
