@@ -10,10 +10,14 @@ const ScheduleSchema = new Schema({
     type: Array,
     required: false
   },
-  hoursAvailable: { // 18-20 hrs
+  starHour: { // 18-20 hrs
     type: String,
     required: false
-  }
+  },
+  endHour: { // 18-20 hrs
+    type: String,
+    required: false
+  },
 }, {
   timestamp: true
 })
