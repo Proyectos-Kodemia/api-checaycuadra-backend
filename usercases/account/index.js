@@ -110,4 +110,10 @@ const update = async (id, accountData) => {
   // return await Account.model.findByIdAndUpdate(id, { name, lastname, password, email, telephone, degree,degreeId, profileImage, description, role, evaluation }).exec()
 }
 
-module.exports = { get, getById, getByEmail, getByName, update, create, logIn, authenticate }
+const updateTokens = async (accountId, tokens) => {
+  const accessToken = tokens.access_token
+  const refreshToken = tokens.refresh_token
+
+  return await Account.model.findByIdAndUpdate(accountId, { accessToken, refreshToken }).exec()
+}
+module.exports = { get, getById, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
