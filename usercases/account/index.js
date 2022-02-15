@@ -24,6 +24,10 @@ const getById = async (id) => {
   return await Account.model.findById(id).exec()
 }
 
+// Tranformaciones para el calendario del cliente
+const getByIdSchedule = async (id) => {
+  return await Account.model.findById(id).exec()
+}
 const getByEmail = async (email) => {
   return await Account.model.findOne(email).exec()
 }
@@ -34,7 +38,7 @@ const getByName = async (name) => {
 
 const getBySpecialities = async (data) => {
   console.log('buscando especialidad', data)
-  return await Account.model.find({ specialities: { $all: [data]  } }, 'id name lastname degree profileImage description role evaluation address Schedule specialities').exec()
+  return await Account.model.find({ specialities: { $all: [data] } }, 'id name lastname degree profileImage description role evaluation address Schedule specialities').sort({ name: 1 }).exec()
 }
 
 const authenticate = async (email, password) => {
@@ -61,27 +65,110 @@ const logIn = async (email, password) => {
 }
 
 const update = async (id, accountData) => {
-  const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
+  console.log('completo data', accountData)
+  const {
+    nombre: name,
+    apellidos: lastname,
+    estado: state,
+    municipio: town,
+    cp,
+    precio: costHour,
+    cedula: degreeId,
+    formacion: degree,
+    especialidades: specialities,
+    acercade: description,
+    email: gmail,
+    daysAvailable,
+    startHour,
+    endHour
+  } = accountData
+
+  console.log(name, lastname, state)
+
+  const address = {
+    cp,
+    state,
+    town
+  }
+
+  // Transformaciones de daysAvailable
+  const changeDaysToLowerCase = (days) => {
+    days.map(day => day.toLowerCase())
+    console.log(days)
+  }
+
+  // const daysInEnglish = {
+  //   lunes: monday,
+  //   martes: tuesday,
+  //   miercoles: wednesday,
+  //   jueves: thursday,
+  //   viernes: friday,
+  //   sabado: saturday,
+  //   domingo: sunday
+  // }
+
+  const translateDays = (arrayDays) => {
+    arrayDays.map((item) => {
+      if (item === lunes) {
+        return [...item, 'monday']
+      } else if (item === martes) {
+        return [...item, 'tuesday']
+      } else if (item === miercoles) {
+        return [...item, 'wednesday']
+      } else if (item === jueves) {
+        return [...item, 'thursday']
+      } else if (item === viernes) {
+        return [...item, 'friday']
+      } else if (item === sabado) {
+        return [...item, 'saturday']
+      } else {
+        return [...item, 'sunday']
+      }
+    })
+  }
+
+  // Hacer los cambios en este punto, antes de crear el objeto
+  console.log(daysAvailable)
+  const changeToLowerCase = changeDaysToLowerCase(daysAvailable)
+  console.log('transformando a min', changeToLowerCase)
+  const changeToEnglish = translateDays(daysAvailable)
+  console.log('a ingles', changeToEnglish)
+
+  const Schedule = {
+    costHour,
+    daysAvailable: changeToEnglish,
+    startHour,
+    endHour
+  }
+
+  // const updateObject = {}
+  // const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
   // const { street, interiorNumber, outdoorNumber, district, town, state, cp } = accountData.address
   // const { costHour, dateStart, dateEnd, rangeHours } = Schedule
 
   if (address && Schedule) {
     console.log('entro 1')
-    return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, degreeId, description, specialities, gmail, address, Schedule }).exec()
   }
 
   if (address) {
     console.log('entro 2')
-    return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, degreeId, description, specialities, gmail, address }).exec()
   }
 
   if (Schedule) {
     console.log('entro 3')
-    return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, Schedule }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, degreeId, description, specialities, gmail, Schedule }).exec()
   }
 
   console.log('entro 4')
-  return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
+  return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, degreeId, description, specialities, gmail }).exec()
 }
 
-module.exports = { get, getById, getByEmail, getByName, update, create, logIn, authenticate, getBySpecialities }
+const updateTokens = async (accountId, tokens) => {
+  const accessToken = tokens.access_token
+  const refreshToken = tokens.refresh_token
+
+  return await Account.model.findByIdAndUpdate(accountId, { accessToken, refreshToken }).exec()
+}
+module.exports = { get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }

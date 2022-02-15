@@ -13,7 +13,7 @@ const DocumentSchema = new Schema({
     type: String,
     required: true
   },
-  owner:{ // Id de quien comparte , coincide con los idś de esa cita y con el IdUpload de storage
+  owner: { // Id de quien comparte , coincide con los idś de esa cita y con el IdUpload de storage
     type: String,
     required: true
   },

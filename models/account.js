@@ -33,6 +33,13 @@ const schema = new Schema({
     unique: true,
     trim: true
   },
+  gmail: {
+    type: String,
+    required: false,
+    minlength: 1,
+    unique: true,
+    trim: true
+  },
   telephone: {
     type: Number,
     minlength: 1
@@ -60,6 +67,12 @@ const schema = new Schema({
   },
   evaluation: {
     type: Number
+  },
+  accessToken: {
+    type: String
+  },
+  refreshToken: {
+    type: String
   },
   specialities: {
     type: Array

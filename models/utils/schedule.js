@@ -4,25 +4,29 @@ const { Schema } = mongoose
 const ScheduleSchema = new Schema({
   costHour: {
     type: String,
-    required: true
+    required: false
   },
-  dateStart: {
-    type: Date,
-    required: true,
-    minlength: 1
-  },
-  dateEnd: {
-    type: Date,
-    required: true,
-    minlength: 1
-  },
-  rangeHours: {
+  daysAvailable: { // [l.m.m,j,v,s]
     type: Array,
-    required: true,
-    minlength: 1
-  }
+    required: false
+  },
+  startHour: { // 18-20 hrs
+    type: String,
+    required: false
+  },
+  endHour: { // 18-20 hrs
+    type: String,
+    required: false
+  },
 }, {
   timestamp: true
 })
 
 module.exports = ScheduleSchema
+
+
+// hoursReserved: { 
+//   // [ {startDateHour:YYYY-MM-DDTHH:mm:ss endDateHour:YYYY-MM-DDTHH:mm:ss }]
+//   type: Array,
+//   required: false
+// },
