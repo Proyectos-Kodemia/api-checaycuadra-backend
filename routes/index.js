@@ -15,7 +15,7 @@ const apiRouter = (app) => {
   app.use('/auth', authRouter)
   // app.use('/register', registerRouter)
   // app.use("/documents", documentsRouter);
-  app.use("/schedule", scheduleRouter);
+  app.use('/schedule', scheduleRouter);
   app.use('/metting', mettingRouter)
   // app.use("/service", serviceRouter);
   app.use('/storage/', storageRouter)

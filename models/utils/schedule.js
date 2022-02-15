@@ -10,7 +10,7 @@ const ScheduleSchema = new Schema({
     type: Array,
     required: false
   },
-  starHour: { // 18-20 hrs
+  startHour: { // 18-20 hrs
     type: String,
     required: false
   },
