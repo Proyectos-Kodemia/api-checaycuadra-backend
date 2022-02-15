@@ -56,36 +56,33 @@ const logIn = async (email, password) => {
 }
 
 const update = async (id, accountData) => {
-  console.log("completo data",accountData)
+  console.log('completo data', accountData)
   const {
-    nombre:name,
-    apellidos:lastname,
-    estado:state,
-    municipio:town,
-    cp:cp,
-    precio:costHour,
-    cedula:degreeId,
-    formacion:degree,
-    especialidades:specialities,
-    acercade:description,
-    email:gmail
+    nombre: name,
+    apellidos: lastname,
+    estado: state,
+    municipio: town,
+    cp,
+    precio: costHour,
+    cedula: degreeId,
+    formacion: degree,
+    especialidades: specialities,
+    acercade: description,
+    email: gmail
   } = accountData
 
-  
-  console.log(name,lastname,state)
- 
-    const address ={ 
-      cp,
-      state,
-      town
+  console.log(name, lastname, state)
+
+  const address = {
+    cp,
+    state,
+    town
   }
- 
-    
-  
-    const Schedule={
-      costHour
-    }
-  
+
+  const Schedule = {
+    costHour
+  }
+
   const updateObject = { }
   // const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
   // const { street, interiorNumber, outdoorNumber, district, town, state, cp } = accountData.address
@@ -93,7 +90,7 @@ const update = async (id, accountData) => {
 
   if (address && Schedule) {
     console.log('entro 1')
-    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree,degreeId, description, specialities,gmail,address, Schedule }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, degreeId, description, specialities, gmail, address, Schedule }).exec()
   }
 
   // if (address) {

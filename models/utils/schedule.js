@@ -17,15 +17,14 @@ const ScheduleSchema = new Schema({
   endHour: { // 18-20 hrs
     type: String,
     required: false
-  },
+  }
 }, {
   timestamp: true
 })
 
 module.exports = ScheduleSchema
 
-
-// hoursReserved: { 
+// hoursReserved: {
 //   // [ {startDateHour:YYYY-MM-DDTHH:mm:ss endDateHour:YYYY-MM-DDTHH:mm:ss }]
 //   type: Array,
 //   required: false

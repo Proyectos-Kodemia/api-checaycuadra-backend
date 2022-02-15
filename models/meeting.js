@@ -15,16 +15,16 @@ const schema = new Schema({
     ref: Account
   },
   summary: {
-    type: String, 
+    type: String
   },
   description: {
-    type: String, 
+    type: String
   },
-  startDateTime:{
-    type:String,
+  startDateTime: {
+    type: String
   },
-  endDateTime:{
-    type:String,
+  endDateTime: {
+    type: String
   },
   hangoutLink: {
     type: String,
@@ -51,9 +51,9 @@ const schema = new Schema({
     required: false,
     minlength: 1
   },
-  documents:{ // Recibe los distintos documentos de la cita enviados por cliente o contador
-    type: Array,
-  },
+  documents: { // Recibe los distintos documentos de la cita enviados por cliente o contador
+    type: Array
+  }
 }, {
   timestamp: true
 })

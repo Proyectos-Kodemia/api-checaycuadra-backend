@@ -74,8 +74,8 @@ const schema = new Schema({
   refreshToken: {
     type: String
   },
-  specialities:{
-    type:Array
+  specialities: {
+    type: Array
   },
   address: AddressSchema, // direccion
   Schedule: ScheduleSchema // horario
