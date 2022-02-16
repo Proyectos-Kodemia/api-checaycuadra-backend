@@ -91,6 +91,12 @@ const update = async (id, accountData) => {
     town
   }
 
+  // Transformaciones de daysAvailable
+  // const changeDaysToLowerCase = (days) => {
+  //   days.map(day => day.toLowerCase())
+  //   console.log(days)
+  // }
+
   // const daysInEnglish = {
   //   lunes: monday,
   //   martes: tuesday,
@@ -101,42 +107,39 @@ const update = async (id, accountData) => {
   //   domingo: sunday
   // }
 
-  const translateDays = (arrayDays) => {
-    arrayDays.map((item) => {
-      if (item === lunes) {
-        return [...item, 'monday']
-      } else if (item === martes) {
-        return [...item, 'tuesday']
-      } else if (item === miercoles) {
-        return [...item, 'wednesday']
-      } else if (item === jueves) {
-        return [...item, 'thursday']
-      } else if (item === viernes) {
-        return [...item, 'friday']
-      } else if (item === sabado) {
-        return [...item, 'saturday']
-      } else {
-        return [...item, 'sunday']
-      }
-    })
-  }
-
-  // Hacer los cambios en este punto, antes de crear el objeto
-  console.log(daysAvailable)
-  const changeToLowerCase = changeDaysToLowerCase(daysAvailable)
-  console.log('transformando a min', changeToLowerCase)
-  const changeToEnglish = translateDays(daysAvailable)
-  console.log('a ingles', changeToEnglish)
-
-  // const Schedule = {
-  //   costHour,
-  //   daysAvailable: changeToEnglish,
-  //   startHour,
-  //   endHour
+  // const translateDays = (arrayDays) => {
+  //   arrayDays.map((item) => {
+  //     if (item === lunes) {
+  //       return [...item, "monday"]
+  //     } else if (item === martes) {
+  //       return [...item, "tuesday"]
+  //     } else if (item === miercoles) {
+  //       return [...item, "wednesday"]
+  //     } else if (item === jueves) {
+  //       return [...item, "thursday"]
+  //     } else if (item === viernes) {
+  //       return [...item, "friday"]
+  //     } else if (item === sabado) {
+  //       return [...item, "saturday"]
+  //     } else {
+  //       return [...item, "sunday"]
+  //     }
+  //     return item
+  //   })
   // }
 
+  // Hacer los cambios en este punto, antes de crear el objeto
+  // console.log(daysAvailable)
+  // const changeToLowerCase = changeDaysToLowerCase(daysAvailable)
+  // console.log("transformando a min", changeToLowerCase)
+  // const changeToEnglish = translateDays(daysAvailable)
+  // console.log("a ingles", changeToEnglish)
+
   const Schedule = {
-    costHour
+    costHour,
+    daysAvailable,
+    startHour,
+    endHour
   }
 
   const updateObject = { }
