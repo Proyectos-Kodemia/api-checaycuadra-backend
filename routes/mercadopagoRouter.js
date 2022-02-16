@@ -3,7 +3,6 @@ const { authHandler, userHandler } = require('../middlewares/authHandlers')
 const config = require('../lib/config')
 const router = express.Router()
 
-
 // SDK de Mercado Pago
 const mercadopago = require('mercadopago')
 

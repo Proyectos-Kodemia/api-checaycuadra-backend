@@ -61,7 +61,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const { id } = req.params
+    // const { id } = req.params
+    console.log('entro en el get')
 
     if (req.query.name) {
       // console.log('entro en name')
@@ -70,6 +71,16 @@ router.get('/', async (req, res, next) => {
       res.status(200).json({
         status: true,
         payload: accountGet
+      })
+    } else if (req.query.specialities) {
+      console.log('entro en especialidad')
+      console.log(req.query.specialities)
+      const searchSpecialities = req.query.specialities
+      const specialitiesGet = await account.getBySpecialities(searchSpecialities)
+      console.log(specialitiesGet)
+      res.status(200).json({
+        status: true,
+        payload: specialitiesGet
       })
     } else {
       const accountGet = await account.get()
@@ -99,7 +110,6 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
-
 
 // router.patch('/:id', async (req, res, next) => {
 //   try {
@@ -149,21 +159,24 @@ router.delete('/:id', async (res, req, next) => {
     console.log('error del Delete', err)
     next(err)
   }
-
 })
 
 router.patch('/perfil', authHandler, async (req, res, next) => {
-  console.log("entra al patch")
+  console.log('entra al patch')
   const { sub } = req.params.tokenPayload
   console.log(sub)
   try {
     const { sub } = req.params.tokenPayload
-    console.log("id en patch perfil", sub)
+    console.log('id en patch perfil', sub)
 
     if (sub) {
       const accountData = req.body
 
+<<<<<<< HEAD
       console.log("recibiendo la data", accountData)
+=======
+      console.log('recibiendo la data', accountData)
+>>>>>>> developer
 
       const accountUpdate = await account.update(sub, accountData)
       res.status(200).json({

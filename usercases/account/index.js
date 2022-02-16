@@ -36,6 +36,11 @@ const getByName = async (name) => {
   return await Account.model.find({ name: { $regex: name, $options: 'ig' } }, 'id name lastname degree profileImage description role evaluation address Schedule').exec()
 }
 
+const getBySpecialities = async (data) => {
+  console.log('buscando especialidad', data)
+  return await Account.model.find({ specialities: { $all: [data] } }, 'id name lastname degree profileImage description role evaluation address Schedule specialities').sort({ name: 1 }).exec()
+}
+
 const authenticate = async (email, password) => {
   const hash = email.password
   return await encrypt.verifyPassword(password, hash)
@@ -60,7 +65,7 @@ const logIn = async (email, password) => {
 }
 
 const update = async (id, accountData) => {
-  console.log("completo data", accountData)
+  console.log('completo data', accountData)
   const {
     nombre: name,
     apellidos: lastname,
@@ -123,7 +128,6 @@ const update = async (id, accountData) => {
   //   })
   // }
 
-
   // Hacer los cambios en este punto, antes de crear el objeto
   // console.log(daysAvailable)
   // const changeToLowerCase = changeDaysToLowerCase(daysAvailable)
@@ -138,13 +142,16 @@ const update = async (id, accountData) => {
     endHour
   }
 
-  const updateObject = {}
+  const updateObject = { }
+  // Transformaciones de daysAvailable
+  const changeDaysToLowerCase = (days) => {
+    days.map(day => day.toLowerCase())
+    console.log(days)
+  }
+  // const updateObject = {}
   // const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
   // const { street, interiorNumber, outdoorNumber, district, town, state, cp } = accountData.address
   // const { costHour, dateStart, dateEnd, rangeHours } = Schedule
-
-
-
 
   if (address && Schedule) {
     console.log('entro 1')
