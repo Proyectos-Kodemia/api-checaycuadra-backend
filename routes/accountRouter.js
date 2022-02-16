@@ -1,9 +1,10 @@
 const express = require('express')
+const moment = require('moment')
 
 const account = require('../usercases/account')
 
 const router = express.Router()
-const {authHandler} = require('../middlewares/authHandlers')
+const { authHandler } = require('../middlewares/authHandlers')
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -13,7 +14,24 @@ router.get('/:id', async (req, res, next) => {
 
     if (id) {
       const accountObject = await account.getById(id)
-      console.log(accountObject)
+      const startHour = accountObject.Schedule.startHour
+      const endHour = accountObject.Schedule.endHour
+
+      const rangeHours = (startHour, endHour) => {
+        const duration = parseInt(endHour) - parseInt(startHour)
+        const schedulesAccount = []
+          for (var i = 0; i < duration; i++) {
+            schedulesAccount.push(
+              `${parseInt(startHour)+i}:00 - ${parseInt(startHour) + i+1}:00`
+            )
+          }
+        return schedulesAccount
+        console.log("en la funcion ranges", schedulesAccount)
+      }
+      const schedules = rangeHours(startHour, endHour)
+
+      console.log("los rangos", schedules)
+
       res.status(200).json({
         id: accountObject.id,
         name: accountObject.name,
@@ -26,7 +44,8 @@ router.get('/:id', async (req, res, next) => {
         evaluation: accountObject.evaluation,
         specialities: accountObject.specialities,
         address: accountObject.address,
-        Schedule: accountObject.Schedule
+        Schedule: accountObject.Schedule,
+        schedules
       })
     } else {
       res.status(404).json({
@@ -143,8 +162,8 @@ router.patch('/perfil', authHandler, async (req, res, next) => {
 
     if (sub) {
       const accountData = req.body
-      
-      console.log("recibiendo la data",accountData)
+
+      console.log("recibiendo la data", accountData)
 
       const accountUpdate = await account.update(sub, accountData)
       res.status(200).json({

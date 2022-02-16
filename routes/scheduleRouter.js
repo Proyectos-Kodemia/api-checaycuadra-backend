@@ -34,9 +34,11 @@ router.patch('/', authHandler, async (req, res, next) => {
         const accountData = req.body
 
         if (sub) {
-            const accountObject = await account.update(sub,accountData)
+            const accountObject = await account.update(sub, accountData)
             console.log(accountObject)
             res.status(200).json({
+                status: true,
+                message: 'Schedule confirmation',
                 Schedule: accountObject.Schedule
             })
         } else {
