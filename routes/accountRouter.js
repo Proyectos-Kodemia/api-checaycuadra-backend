@@ -55,10 +55,10 @@ router.get('/', async (req, res, next) => {
       })
     } else if (req.query.specialities) {
       console.log('entro en especialidad')
-      console.log(req.query.specialities)
+      // console.log(req.query.specialities)
       const searchSpecialities = req.query.specialities
       const specialitiesGet = await account.getBySpecialities(searchSpecialities)
-      console.log(specialitiesGet)
+      // console.log(specialitiesGet)
       res.status(200).json({
         status: true,
         payload: specialitiesGet

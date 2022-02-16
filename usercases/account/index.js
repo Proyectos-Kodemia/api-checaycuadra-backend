@@ -38,7 +38,37 @@ const getByName = async (name) => {
 
 const getBySpecialities = async (data) => {
   console.log('buscando especialidad', data)
-  return await Account.model.find({ specialities: { $all: [data] } }, 'id name lastname degree profileImage description role evaluation address Schedule specialities').sort({ name: 1 }).exec()
+  const total = await Account.model.count()
+  // console.log(total)
+  let registros = []
+  
+  const searchSpecialities = await Account.model.find().sort({ name: -1 }).exec()
+  const objectSpecialities = searchSpecialities.map((register, index) => {
+    // console.log('***** aqui esta iniciando el registro', register)
+    const valor = register.specialities.map((speciality) => {
+      console.log('***** aqui esta iniciando el registro', speciality)
+      console.log('especialidad ',JSON.stringify(speciality.title))
+      console.log('data ',data)
+      if (JSON.stringify(speciality.title) === data.title) {
+        return true
+      } else {
+        return false
+      }
+    })
+    console.log('***** aqui esta el valor', valor)
+    if (valor) {
+      registros = [...registros, register]
+    } else {
+      registros = [...registros]
+    }
+    return registros
+  })
+  // console.log('*****************viendo que regresa',objectSpecialities)
+  return objectSpecialities
+
+  // return await Account.model.find(
+  //   { data },
+  //   'id name lastname degree profileImage description role evaluation address Schedule specialities').sort({ name: 1 }).exec()
 }
 
 const authenticate = async (email, password) => {
@@ -175,4 +205,4 @@ const updateTokens = async (accountId, tokens) => {
 
   return await Account.model.findByIdAndUpdate(accountId, { accessToken, refreshToken }).exec()
 }
-module.exports = { get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
+module.exports = { getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
