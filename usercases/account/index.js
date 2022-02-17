@@ -37,8 +37,28 @@ const getByName = async (name) => {
 }
 
 const getBySpecialities = async (data) => {
-  console.log('buscando especialidad', data)
-  return await Account.model.find({ specialities: { $all: [data] } }, 'id name lastname degree profileImage description role evaluation address Schedule specialities').sort({ name: 1 }).exec()
+  let registros = []
+  let bandera = false
+
+  const searchSpecialities = await Account.model.find().exec() // .sort({ name: 1 })
+
+  searchSpecialities.map((register, index) => {
+    register.specialities.map((speciality) => {
+      const titleSpecialities = JSON.parse(data)
+      if (speciality.title === titleSpecialities.title) {
+        bandera = true
+        return true
+      }
+      return false
+    })
+
+    if (bandera) {
+      registros = [...registros, register]
+      bandera = false
+    }
+    return registros
+  })
+  return registros
 }
 
 const authenticate = async (email, password) => {
@@ -178,4 +198,4 @@ const updateTokens = async (accountId, tokens) => {
 
   return await Account.model.findByIdAndUpdate(accountId, { accessToken, refreshToken }).exec()
 }
-module.exports = { get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
+module.exports = { getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }

@@ -20,17 +20,17 @@ router.get('/:id', async (req, res, next) => {
       const rangeHours = (startHour, endHour) => {
         const duration = parseInt(endHour) - parseInt(startHour)
         const schedulesAccount = []
-          for (var i = 0; i < duration; i++) {
-            schedulesAccount.push(
-              `${parseInt(startHour)+i}:00 - ${parseInt(startHour) + i+1}:00`
-            )
-          }
+        for (let i = 0; i < duration; i++) {
+          schedulesAccount.push(
+              `${parseInt(startHour) + i}:00 - ${parseInt(startHour) + i + 1}:00`
+          )
+        }
+        console.log('en la funcion ranges', schedulesAccount)
         return schedulesAccount
-        console.log("en la funcion ranges", schedulesAccount)
       }
       const schedules = rangeHours(startHour, endHour)
 
-      console.log("los rangos", schedules)
+      console.log('los rangos', schedules)
 
       res.status(200).json({
         id: accountObject.id,
@@ -74,10 +74,10 @@ router.get('/', async (req, res, next) => {
       })
     } else if (req.query.specialities) {
       console.log('entro en especialidad')
-      console.log(req.query.specialities)
+      // console.log(req.query.specialities)
       const searchSpecialities = req.query.specialities
       const specialitiesGet = await account.getBySpecialities(searchSpecialities)
-      console.log(specialitiesGet)
+      // console.log(specialitiesGet)
       res.status(200).json({
         status: true,
         payload: specialitiesGet
@@ -172,11 +172,7 @@ router.patch('/perfil', authHandler, async (req, res, next) => {
     if (sub) {
       const accountData = req.body
 
-<<<<<<< HEAD
-      console.log("recibiendo la data", accountData)
-=======
       console.log('recibiendo la data', accountData)
->>>>>>> developer
 
       const accountUpdate = await account.update(sub, accountData)
       res.status(200).json({
