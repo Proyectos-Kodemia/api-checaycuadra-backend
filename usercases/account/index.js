@@ -37,38 +37,28 @@ const getByName = async (name) => {
 }
 
 const getBySpecialities = async (data) => {
-  console.log('buscando especialidad', data)
-  const total = await Account.model.count()
-  // console.log(total)
   let registros = []
-  
-  const searchSpecialities = await Account.model.find().sort({ name: -1 }).exec()
-  const objectSpecialities = searchSpecialities.map((register, index) => {
-    // console.log('***** aqui esta iniciando el registro', register)
-    const valor = register.specialities.map((speciality) => {
-      console.log('***** aqui esta iniciando el registro', speciality)
-      console.log('especialidad ',JSON.stringify(speciality.title))
-      console.log('data ',data)
-      if (JSON.stringify(speciality.title) === data.title) {
+  let bandera = false
+
+  const searchSpecialities = await Account.model.find().exec() // .sort({ name: 1 })
+
+  searchSpecialities.map((register, index) => {
+    register.specialities.map((speciality) => {
+      const titleSpecialities = JSON.parse(data)
+      if (speciality.title === titleSpecialities.title) {
+        bandera = true
         return true
-      } else {
-        return false
       }
+      return false
     })
-    console.log('***** aqui esta el valor', valor)
-    if (valor) {
+
+    if (bandera) {
       registros = [...registros, register]
-    } else {
-      registros = [...registros]
+      bandera = false
     }
     return registros
   })
-  // console.log('*****************viendo que regresa',objectSpecialities)
-  return objectSpecialities
-
-  // return await Account.model.find(
-  //   { data },
-  //   'id name lastname degree profileImage description role evaluation address Schedule specialities').sort({ name: 1 }).exec()
+  return registros
 }
 
 const authenticate = async (email, password) => {
