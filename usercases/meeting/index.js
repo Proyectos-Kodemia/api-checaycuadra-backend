@@ -8,10 +8,9 @@ const userCase = require('../user')
 const accountCase = require('../account')
 
 // const { ObjectId } = require('mongodb')
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 // const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId
-
 
 const create = async (meetData, sub) => {
   const user = sub
@@ -29,15 +28,15 @@ const getById = async (id) => {
   return await Meeting.model.findById(id).exec()
 }
 
-const createLink = async (id,user) => {
+const createLink = async (id, user) => {
   const idMeeting = id
   // const idMeeting = mongoose.Types.ObjectId.createFromHexString(id)
   // const idMeeting = mongoose.mongo.BSONPure.ObjectId.fromHexString(id)
-  
+
   // const idMeeting = id
   const meetData = await Meeting.model.findById(idMeeting).exec()
 
-  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment} = meetData
+  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
   const summary = `Cita para el servicio de ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
@@ -98,7 +97,7 @@ const createLink = async (id,user) => {
   const { hangoutLink } = meetGoogle.data
   console.log(hangoutLink)
   // Guardando cita en la base de datos
-  const meetingWithLink = await Meeting.model.findByIdAndUpdate(idMeeting,{hangoutLink }).exec()
+  const meetingWithLink = await Meeting.model.findByIdAndUpdate(idMeeting, { hangoutLink }).exec()
 
   return meetingWithLink
 }
@@ -106,8 +105,6 @@ const createLink = async (id,user) => {
 const getAll = async () => {
   return await Meeting.model.find({}).exec()
 }
-
-
 
 const getByUserClient = async (id) => {
   return await Meeting.model.find({ user: id }).exec()

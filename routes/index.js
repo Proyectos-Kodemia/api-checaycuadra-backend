@@ -8,11 +8,13 @@ const userRouter = require('./userRouter')
 const storageRouter = require('./storageRouter')
 const googleRouter = require('./googleRouter')
 const mercadopagoRouter = require('./mercadopagoRouter')
+const mailingRouter = require('./mailingRouter')
 // const registerRouter = require('./registerRouter')
 
 const apiRouter = (app) => {
   app.use('/account', accountRouter)
   app.use('/auth', authRouter)
+  app.use('/mail', mailingRouter)
   // app.use('/register', registerRouter)
   // app.use("/documents", documentsRouter);
   app.use('/schedule', scheduleRouter)
