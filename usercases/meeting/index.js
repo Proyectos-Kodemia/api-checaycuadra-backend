@@ -15,6 +15,7 @@ const ObjectId = mongoose.Types.ObjectId
 const create = async (meetData, sub) => {
   const user = sub
   const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
+  console.log("todo la data", meetData)
 
   // Guardando cita en la base de datos
   const meeting = new Meeting.model({ user, userAccount, startDateTime, endDateTime, title, quantity, unit_price, statusPayment })
