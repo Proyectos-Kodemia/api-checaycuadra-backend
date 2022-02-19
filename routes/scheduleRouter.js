@@ -46,29 +46,29 @@ router.post('/', authHandler, async (req, res, next) => {
     const { startHour } = req.body
     console.log(id)
 
-        if (sub) {
-            const accountObject = await account.update(sub, accountData)
-            console.log(accountObject)
-            res.status(200).json({
-                status: true,
-                message: 'Schedule confirmation',
-                Schedule: accountObject.Schedule
-            })
-        } else {
-            res.status(404).json({
-                status: false,
-                message: 'Accoun Id not Found'
-            })
-        }
-    } catch (err) {
-        console.log('error en el patch Schedule  GetById', err)
-        next(err)
+    if (sub) {
+      const accountObject = await account.update(sub, accountData)
+      console.log(accountObject)
+      res.status(200).json({
+        status: true,
+        message: 'Schedule confirmation',
+        Schedule: accountObject.Schedule
+      })
+    } else {
+      res.status(404).json({
+        status: false,
+        message: 'Accoun Id not Found'
+      })
     }
   } catch (err) {
-    console.log('error del GetById', err)
+    console.log('error en el patch Schedule  GetById', err)
     next(err)
   }
-})
+}// catch (err) {
+  // console.log('error del GetById', err)
+  // next(err)
+  // }
+)
 
 // Modifica dayAvailable , hoursAvailabe
 router.patch('/:id', authHandler, async (req, res, next) => {

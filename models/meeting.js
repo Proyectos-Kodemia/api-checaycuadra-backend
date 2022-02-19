@@ -53,11 +53,26 @@ const schema = new Schema({
   },
   documents: { // Recibe los distintos documentos de la cita enviados por cliente o contador
     type: Array
+  },
+  date: {
+    type: Date,
+    required: false
+  },
+  day: {
+    type: String,
+    required: false
+  },
+  hour: {
+    type: String,
+    required: false
+  },
+  week: {
+    type: String,
+    required: false
   }
 }, {
   timestamp: true
 })
-
 module.exports = {
   model: mongoose.model('Cita', schema),
   schema

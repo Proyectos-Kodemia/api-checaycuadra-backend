@@ -7,7 +7,7 @@ const ScheduleSchema = new Schema({
     required: false
   },
   daysAvailable: { // [l.m.m,j,v,s]
-    type: [Number],
+    type: [],
     required: false
   },
   startHour: { // 18-20 hrs
