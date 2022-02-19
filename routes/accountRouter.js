@@ -25,6 +25,7 @@ router.get('/:id', async (req, res, next) => {
               `${parseInt(startHour) + i}:00 - ${parseInt(startHour) + i + 1}:00`
           )
         }
+
         return schedulesAccount
         console.log('en la funcion ranges', schedulesAccount)
       }
@@ -74,10 +75,10 @@ router.get('/', async (req, res, next) => {
       })
     } else if (req.query.specialities) {
       console.log('entro en especialidad')
-      console.log(req.query.specialities)
+      // console.log(req.query.specialities)
       const searchSpecialities = req.query.specialities
       const specialitiesGet = await account.getBySpecialities(searchSpecialities)
-      console.log(specialitiesGet)
+      // console.log(specialitiesGet)
       res.status(200).json({
         status: true,
         payload: specialitiesGet
