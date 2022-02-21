@@ -29,7 +29,7 @@ const getById = async (id) => {
   return await Meeting.model.findById(id).exec()
 }
 
-const createLink = async (id, user) => {
+const createLink = async (id, userAccount) => {
   const idMeeting = id
   // const idMeeting = mongoose.Types.ObjectId.createFromHexString(id)
   // const idMeeting = mongoose.mongo.BSONPure.ObjectId.fromHexString(id)
@@ -37,12 +37,12 @@ const createLink = async (id, user) => {
   // const idMeeting = id
   const meetData = await Meeting.model.findById(idMeeting).exec()
 
-  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
+  const { user, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
   const summary = `Cita para el servicio de ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
 
-  const { refreshToken } = await userCase.getById(user)
+  const { refreshToken } = await userCase.getById(userAccount)
 
   const googleClientId = config.google.clientId
   const googleSecret = config.google.secret
@@ -59,7 +59,7 @@ const createLink = async (id, user) => {
   const requestId = randomstring.generate()
 
   // Obtener email del contador
-  const { email } = await accountCase.getById(userAccount)
+  const { email } = await accountCase.getById(user)
 
   // Crear evento
   const calendar = google.calendar('v3')
@@ -116,8 +116,8 @@ const getByUserAccount = async (id) => {
 }
 
 const update = async (meetingId, meetingData) => {
-  const { user, userAccount, link, time, service, total } = meetingData
-  return await Meeting.model.findByIdAndUpdate(meetingId, { user, userAccount, link, time, service, total }).exec()
+  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetingData
+  return await Meeting.model.findByIdAndUpdate(meetingId, { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment}).exec()
 }
 
 const del = async (meetingId) => {
