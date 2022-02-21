@@ -27,12 +27,8 @@ router.get('/:id', async (req, res, next) => {
         }
 
         return schedulesAccount
-        console.log('en la funcion ranges', schedulesAccount)
       }
       const schedules = rangeHours(startHour, endHour)
-
-      console.log('los rangos', schedules)
-
       res.status(200).json({
         id: accountObject.id,
         name: accountObject.name,

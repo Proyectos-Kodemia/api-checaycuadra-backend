@@ -34,8 +34,8 @@ router.patch('/hangout-link', authHandler, async (req, res, next) => {
   try {
     const { sub } = req.params.tokenPayload
     const { idMeeting } = req.body
-    console.log('aqui el id Meeting', idMeeting)
-    const meetingWithLink = await meet.createLink(idMeeting, sub)
+    console.log('aqui el id Meeting en hangout-link', idMeeting)
+    const meetingWithLink = await meet.createLink(idMeeting)
     res.status(200).json({
       status: true,
       message: 'Meeting link create succesfully',

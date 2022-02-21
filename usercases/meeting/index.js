@@ -15,6 +15,7 @@ const ObjectId = mongoose.Types.ObjectId
 const create = async (meetData, sub) => {
   const user = sub
   const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
+  console.log("todo la data", meetData)
 
   // Guardando cita en la base de datos
   const meeting = new Meeting.model({ user, userAccount, startDateTime, endDateTime, title, quantity, unit_price, statusPayment })
@@ -28,7 +29,7 @@ const getById = async (id) => {
   return await Meeting.model.findById(id).exec()
 }
 
-const createLink = async (id, user) => {
+const createLink = async (id) => {
   const idMeeting = id
   // const idMeeting = mongoose.Types.ObjectId.createFromHexString(id)
   // const idMeeting = mongoose.mongo.BSONPure.ObjectId.fromHexString(id)
@@ -36,12 +37,13 @@ const createLink = async (id, user) => {
   // const idMeeting = id
   const meetData = await Meeting.model.findById(idMeeting).exec()
 
-  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
+  const { user, userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
   const summary = `Cita para el servicio de ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
-
-  const { refreshToken } = await userCase.getById(user)
+  const account = userAccount.valueOf()
+  console.log("el contador con refreshhToken ", account)
+  const { refreshToken } = await accountCase.getById(account)
 
   const googleClientId = config.google.clientId
   const googleSecret = config.google.secret
@@ -57,8 +59,8 @@ const createLink = async (id, user) => {
   oauth2Client.setCredentials({ refresh_token: refreshToken })
   const requestId = randomstring.generate()
 
-  // Obtener email del contador
-  const { email } = await accountCase.getById(userAccount)
+  // Obtener email del usuario
+  const { email } = await userCase.getById(user)
 
   // Crear evento
   const calendar = google.calendar('v3')
@@ -115,8 +117,8 @@ const getByUserAccount = async (id) => {
 }
 
 const update = async (meetingId, meetingData) => {
-  const { user, userAccount, link, time, service, total } = meetingData
-  return await Meeting.model.findByIdAndUpdate(meetingId, { user, userAccount, link, time, service, total }).exec()
+  const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetingData
+  return await Meeting.model.findByIdAndUpdate(meetingId, { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment}).exec()
 }
 
 const del = async (meetingId) => {

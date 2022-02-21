@@ -24,7 +24,7 @@ router.post('/checkout', async (req, res, next) => {
     const { id } = req.body
     // Parametros de la compra
 
-    console.log(req.body)
+    // console.log(req.body)
     // const request = JSON.parse(req.body)
 
     const preference = {
