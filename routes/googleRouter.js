@@ -3,7 +3,7 @@ const google = require('../usercases/google')
 const { authHandler, userHandler } = require('../middlewares/authHandlers')
 const config = require('../lib/config')
 const router = express.Router()
-const users = require('../usercases/user')
+const account = require('../usercases/account')
 
 router.post('/auth', async (req, res, next) => {
   try {
@@ -28,18 +28,17 @@ router.post('/auth', async (req, res, next) => {
 // patch que recibe el code del front
 router.patch('/callback', authHandler, async (req, res, next) => {
   try {
-    console.log('entro en el callback google')
-    const { code } = req.body // Chrcar Id del cliente, solo se guarda si el role es cliente
+    console.log('entro a callback')
 
-    const { sub, role } = req.params.tokenPayload
-    console.log('sub', sub)
-    console.log('role', role)
+    const { sub } = req.params.tokenPayload
+    console.log(sub)
+    const code = req.body
     console.log('aqui el code:', code)
 
     const tokens = await google.getTokens(code)
     console.log('los tokens:', tokens)
 
-    const saveTokens = await users.updateTokens(sub, tokens)
+    const saveTokens = await account.updateTokens(sub, tokens)
 
     // //console.log("los token salvados", saveTokens)
     // // if(role==="cliente"){
@@ -51,17 +50,17 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     res.status(200).json({
       ok: true,
       payload: {
-        message: 'Usuario autenticado correctamente',
+        message: 'Usuario autenticado correctamente, tokens salvados',
         tokens: tokens
       }
     })
   } catch (err) {
     next(err)
-    console.log('error', err)
+    console.log('error desde next googleRouter', err)
     res.status(400).json({
       ok: false,
       payload: {
-        message: 'Usuario no autenticado, intente nuevamente'
+        message: err
       }
     })
   }

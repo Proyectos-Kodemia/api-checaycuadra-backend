@@ -15,9 +15,7 @@ router.post('/', async (req, res, next) => {
     res.status(201).json({
       status: true,
       message: 'User Created successfully',
-      payload: {
-        _id
-      }
+      payload: _id
     })
   } catch (err) {
     next(err)

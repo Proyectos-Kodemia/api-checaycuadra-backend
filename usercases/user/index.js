@@ -3,10 +3,11 @@ const encrypt = require('../../lib/crypt')
 const jwt = require('../../lib/jwt')
 
 const create = async (dataUser) => {
-  const { password, email, role, name, lastname } = dataUser
+  const { name, lastname, email, password, telephone } = dataUser
+  const role = 'cliente'
   const hash = await encrypt.hashPassword(password)
 
-  const user = new User.model({ password: hash, email, role, name, lastname })
+  const user = new User.model({ name, lastname, password: hash, email, telephone, role })
   // if role usando user( userId)
 
   const savedUser = await user.save()

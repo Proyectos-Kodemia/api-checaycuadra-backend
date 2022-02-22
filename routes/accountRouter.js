@@ -1,18 +1,34 @@
 const express = require('express')
+const moment = require('moment')
 
 const account = require('../usercases/account')
 
 const router = express.Router()
+const { authHandler } = require('../middlewares/authHandlers')
 
 router.get('/:id', async (req, res, next) => {
   try {
-    //console.log('entro en id')
+    // console.log('entro en id')
     const { id } = req.params
-    //console.log(id)
+    // console.log(id)
 
     if (id) {
       const accountObject = await account.getById(id)
-      //console.log(accountObject)
+      const startHour = accountObject.Schedule.startHour
+      const endHour = accountObject.Schedule.endHour
+
+      const rangeHours = (startHour, endHour) => {
+        const duration = parseInt(endHour) - parseInt(startHour)
+        const schedulesAccount = []
+        for (let i = 0; i < duration; i++) {
+          schedulesAccount.push(
+              `${parseInt(startHour) + i}:00 - ${parseInt(startHour) + i + 1}:00`
+          )
+        }
+
+        return schedulesAccount
+      }
+      const schedules = rangeHours(startHour, endHour)
       res.status(200).json({
         id: accountObject.id,
         name: accountObject.name,
@@ -25,7 +41,8 @@ router.get('/:id', async (req, res, next) => {
         evaluation: accountObject.evaluation,
         specialities: accountObject.specialities,
         address: accountObject.address,
-        Schedule: accountObject.Schedule
+        Schedule: accountObject.Schedule,
+        schedules
       })
     } else {
       res.status(404).json({
@@ -34,14 +51,15 @@ router.get('/:id', async (req, res, next) => {
       })
     }
   } catch (err) {
-    //console.log('error del GetById', err)
+    // console.log('error del GetById', err)
     next(err)
   }
 })
 
 router.get('/', async (req, res, next) => {
   try {
-    const { id } = req.params
+    // const { id } = req.params
+    console.log('entro en el get')
 
     if (req.query.name) {
       // //console.log('entro en name')
@@ -51,6 +69,16 @@ router.get('/', async (req, res, next) => {
         status: true,
         payload: accountGet
       })
+    } else if (req.query.specialities) {
+      console.log('entro en especialidad')
+      // console.log(req.query.specialities)
+      const searchSpecialities = req.query.specialities
+      const specialitiesGet = await account.getBySpecialities(searchSpecialities)
+      // console.log(specialitiesGet)
+      res.status(200).json({
+        status: true,
+        payload: specialitiesGet
+      })
     } else {
       const accountGet = await account.get()
       res.status(200).json({
@@ -59,7 +87,7 @@ router.get('/', async (req, res, next) => {
       })
     }
   } catch (err) {
-    //console.log('error del Get account', err)
+    // console.log('error del Get account', err)
     next(err)
   }
 })
@@ -69,46 +97,44 @@ router.post('/', async (req, res, next) => {
     const accountData = req.body
     const accountCreated = await account.create(accountData)
     const { _id } = accountCreated
-    //console.log(accountCreated)
     res.status(201).json({
       status: true,
       message: 'Account Created Succesfully',
       payload: _id
     })
   } catch (err) {
-    //console.log('error del post', err)
+    // console.log('error del post', err)
     next(err)
   }
 })
-module.exports = router
 
-router.patch('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params
-    if (id) {
-      const accountData = req.body
+// router.patch('/:id', async (req, res, next) => {
+//   try {
+//     const { id } = req.params
+//     if (id) {
+//       const accountData = req.body
 
-      const accountUpdate = await account.update(id, accountData)
-      res.status(200).json({
-        status: true,
-        message: 'Update Successfully',
-        payload: {
-          Id: accountUpdate._id,
-          name: accountUpdate.name,
-          role: accountUpdate.role
-        }
-      })
-    } else {
-      res.status(404).json({
-        status: false,
-        message: 'Id not Found'
-      })
-    }
-  } catch (err) {
-    //console.log('error del Patch', err)
-    next(err)
-  }
-})
+//       const accountUpdate = await account.update(id, accountData)
+//       res.status(200).json({
+//         status: true,
+//         message: 'Update Successfully',
+//         payload: {
+//           Id: accountUpdate._id,
+//           name: accountUpdate.name,
+//           role: accountUpdate.role
+//         }
+//       })
+//     } else {
+//       res.status(404).json({
+//         status: false,
+//         message: 'Id not Found'
+//       })
+//     }
+//   } catch (err) {
+//     console.log('error del Patch', err)
+//     next(err)
+//   }
+// })
 
 router.delete('/:id', async (res, req, next) => {
   try {
@@ -127,7 +153,42 @@ router.delete('/:id', async (res, req, next) => {
       })
     }
   } catch (err) {
-    //console.log('error del Delete', err)
+    // console.log('error del Delete', err)
     next(err)
   }
 })
+
+router.patch('/perfil', authHandler, async (req, res, next) => {
+  console.log('entra al patch')
+  const { sub } = req.params.tokenPayload
+  console.log(sub)
+  try {
+    const { sub } = req.params.tokenPayload
+    console.log('id en patch perfil', sub)
+
+    if (sub) {
+      const accountData = req.body
+
+      console.log('recibiendo la data', accountData)
+
+      const accountUpdate = await account.update(sub, accountData)
+      res.status(200).json({
+        status: true,
+        message: 'Update Successfully',
+        payload: {
+          accountUpdate
+        }
+      })
+    } else {
+      res.status(404).json({
+        status: false,
+        message: 'Id not Found'
+      })
+    }
+  } catch (err) {
+    console.log('error del Patch', err)
+    next(err)
+  }
+})
+
+module.exports = router
