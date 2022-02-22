@@ -44,13 +44,13 @@ router.post('/checkout', async (req, res, next) => {
       auto_return: 'approved'
     }
 
-    console.log(preference)
+    // console.log(preference)
 
     mercadopago.preferences
       .create(preference)
       .then(function (response) {
         // En esta instancia deberás asignar el valor dentro de response.body.id por el ID de preferencia solicitado en el siguiente paso
-        console.log(response.body)
+        // console.log(response.body)
 
         res.json(response.body.sandbox_init_point)
       })
@@ -66,7 +66,7 @@ router.post('/checkout', async (req, res, next) => {
     // })
   } catch (err) {
     next(err)
-    console.log(err)
+    // console.log(err)
   }
 })
 
@@ -79,7 +79,7 @@ router.post('/checkout', async (req, res, next) => {
 
 //   }catch (err) {
 //     next(err)
-//     console.log(err)
+//     //console.log(err)
 //   }
 // })
 

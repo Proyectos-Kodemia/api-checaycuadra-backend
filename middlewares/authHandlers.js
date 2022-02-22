@@ -5,9 +5,11 @@ const authHandler = async (req, res, next) => {
   console.log('entro al authhandler')
   console.log(token)
   try {
+    console.log('entro en authhandler')
     const payload = await jwt.verifyToken(token)
     if (payload) {
       req.params.tokenPayload = payload
+      console.log(payload)
       next()
     }
   } catch (error) {
@@ -22,17 +24,17 @@ const authHandler = async (req, res, next) => {
 
 const userHandler = async (req, res, next) => {
   const { token } = req.headers
-  // console.log("token:", token)
+  // //console.log("token:", token)
   const payload = await jwt.verifyToken(token)
-  // console.log("payload:",payload)
+  // //console.log("payload:",payload)
   const { sub } = payload
-  // console.log("id",sub)
+  // //console.log("id",sub)
 
   const { id } = req.params
-  // console.log("UserId",id)
+  // //console.log("UserId",id)
   try {
     if (id === sub) {
-      // console.log("entro al if")
+      // //console.log("entro al if")
       next()
     } else {
       throw new Error('Id Usuario no corresponde')

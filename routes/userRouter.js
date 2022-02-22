@@ -8,7 +8,7 @@ router.post('/', async (req, res, next) => {
   try {
     const userData = req.body
 
-    // console.log(userData)
+    // //console.log(userData)
 
     const userCreated = await user.create(userData)
     const { _id } = userCreated
@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -43,7 +43,7 @@ router.get('/:id', async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -63,7 +63,7 @@ router.patch('/:id', userHandler, async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -81,7 +81,7 @@ router.delete('/:id', userHandler, async (req, res, next) => {
     })
   } catch (err) {
     next(err)
-    console.log(err)
+    //console.log(err)
   }
 })
 

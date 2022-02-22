@@ -8,9 +8,9 @@ const { authHandler } = require('../middlewares/authHandlers')
 
 router.get('/:id', async (req, res, next) => {
   try {
-    console.log('entro en id')
+    // console.log('entro en id')
     const { id } = req.params
-    console.log(id)
+    // console.log(id)
 
     if (id) {
       const accountObject = await account.getById(id)
@@ -51,7 +51,7 @@ router.get('/:id', async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del GetById', err)
+    // console.log('error del GetById', err)
     next(err)
   }
 })
@@ -62,7 +62,7 @@ router.get('/', async (req, res, next) => {
     console.log('entro en el get')
 
     if (req.query.name) {
-      // console.log('entro en name')
+      // //console.log('entro en name')
       const searchUser = req.query.name
       const accountGet = await account.getByName(searchUser)
       res.status(200).json({
@@ -87,7 +87,7 @@ router.get('/', async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Get account', err)
+    // console.log('error del Get account', err)
     next(err)
   }
 })
@@ -153,7 +153,7 @@ router.delete('/:id', async (res, req, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Delete', err)
+    // console.log('error del Delete', err)
     next(err)
   }
 })

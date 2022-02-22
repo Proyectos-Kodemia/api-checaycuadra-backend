@@ -32,10 +32,10 @@ router.post('/account', async (req, res, next) => {
 router.post('/users', async (req, res, next) => {
   try {
     const { email, password } = req.body
-    console.log(email, password)
+    // console.log(email, password)
 
     const token = await user.logIn(email, password)
-    console.log(token)
+    // console.log(token)
     if (token) {
       res.status(200).json({
         status: true,

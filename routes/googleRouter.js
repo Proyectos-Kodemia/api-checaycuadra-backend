@@ -40,7 +40,7 @@ router.patch('/callback', authHandler, async (req, res, next) => {
 
     const saveTokens = await account.updateTokens(sub, tokens)
 
-    // console.log("los token salvados", saveTokens)
+    // //console.log("los token salvados", saveTokens)
     // // if(role==="cliente"){
     //     const saveTokens = await user.getTokens(userId,tokens)
     // }else{
@@ -65,20 +65,5 @@ router.patch('/callback', authHandler, async (req, res, next) => {
     })
   }
 })
-
-// router.post('/create-event', async (req, res, next) => {
-//   try {
-
-//     res.status(200).json({
-//       ok: true,
-//       payload: {
-//         authUrl: auth
-//       }
-//     })
-//   } catch (err) {
-//     next(err)
-//     console.log(err)
-//   }
-// })
 
 module.exports = router
