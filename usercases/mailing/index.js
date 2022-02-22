@@ -7,7 +7,7 @@ sgMail.setApiKey(mail)
 const sendMail = async ({ to, subject, text, html }) => {
   const msg = {
     to,
-    from: 'shadowhechicero@hotmail.com',
+    from: 'checaycuadra@gmail.com',
     subject,
     text,
     html
