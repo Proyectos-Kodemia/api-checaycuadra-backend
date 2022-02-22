@@ -173,24 +173,24 @@ const update = async (id, accountData) => {
   // const { street, interiorNumber, outdoorNumber, district, town, state, cp } = accountData.address
   // const { costHour, dateStart, dateEnd, rangeHours } = Schedule
 
-//   if (address && Schedule) {
-//     // console.log('entro 1')
-//     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule }).exec()
-//   }
+  //   if (address && Schedule) {
+  //     // console.log('entro 1')
+  //     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule }).exec()
+  //   }
 
-//   if (address) {
-//     // console.log('entro 2')
-//     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address }).exec()
-//   }
+  //   if (address) {
+  //     // console.log('entro 2')
+  //     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address }).exec()
+  //   }
 
-//   if (Schedule) {
-//     // console.log('entro 3')
-//     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, Schedule }).exec()
-//   }
+  //   if (Schedule) {
+  //     // console.log('entro 3')
+  //     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, Schedule }).exec()
+  //   }
 
-//   // console.log('entro 4')
-//   return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
-// }
+  //   // console.log('entro 4')
+  //   return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
+}
 
 const updateTokens = async (accountId, tokens) => {
   const accessToken = tokens.access_token

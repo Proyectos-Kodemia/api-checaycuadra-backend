@@ -103,7 +103,7 @@ router.post('/', async (req, res, next) => {
       payload: _id
     })
   } catch (err) {
-    // console.log('error del post', err)
+    console.log('error del post', err)
     next(err)
   }
 })
