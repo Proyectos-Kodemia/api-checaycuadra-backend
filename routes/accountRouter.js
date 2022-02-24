@@ -186,7 +186,7 @@ router.patch('/perfil', authHandler, async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Patch', err)
+    console.log('error del Patch accountRouter', err)
     next(err)
   }
 })
