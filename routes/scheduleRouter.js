@@ -61,7 +61,7 @@ router.post('/', authHandler, async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error en el patch Schedule  GetById', err)
+    console.log('error en el post Schedule  GetById', err)
     next(err)
   }
 }// catch (err) {
@@ -73,7 +73,7 @@ router.post('/', authHandler, async (req, res, next) => {
 // Modifica dayAvailable , hoursAvailabe
 router.patch('/:id', authHandler, async (req, res, next) => {
   try {
-    console.log('entro en id')
+    console.log('entro en patch de schedulerouter')
     const { id } = req.params
     console.log(id)
 
