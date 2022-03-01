@@ -12,6 +12,7 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params
     // console.log(id)
 
+
     if (id) {
       const accountObject = await account.getById(id)
       const startHour = accountObject.Schedule.startHour
