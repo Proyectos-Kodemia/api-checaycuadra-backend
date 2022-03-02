@@ -175,24 +175,24 @@ const update = async (id, accountData) => {
 
   if (address && Schedule) {
     // console.log('entro 1')
-    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, address, Schedule }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, address, Schedule,degreeId,specialities,gmail }).exec()
     // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, address, Schedule }).exec()
   }
 
   if (address) {
     // console.log('entro 2')
-    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, address }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, address,degreeId,specialities,gmail}).exec()
     // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, address }).exec()
   }
 
   if (Schedule) {
     // console.log('entro 3')
-    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, Schedule }).exec()
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, Schedule,degreeId,specialities,gmail }).exec()
     // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, Schedule }).exec()
   }
 
   // console.log('entro 4')
-  return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description }).exec()
+  return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description,degreeId,specialities,gmail}).exec()
   // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description }).exec()
 }
 
