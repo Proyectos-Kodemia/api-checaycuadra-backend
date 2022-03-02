@@ -42,6 +42,7 @@ router.get('/', authHandler, async (req, res, next) => {
 // Create dayAvailable , hoursAvailabe
 router.post('/', authHandler, async (req, res, next) => {
   try {
+    const { sub } = req.params.tokenPayload
     console.log('entro en id')
     const { startHour } = req.body
     console.log(id)
@@ -71,28 +72,17 @@ router.post('/', authHandler, async (req, res, next) => {
 )
 
 // Modifica dayAvailable , hoursAvailabe
-router.patch('/:id', authHandler, async (req, res, next) => {
+router.patch('/', authHandler, async (req, res, next) => {
   try {
     console.log('entro en patch de schedulerouter')
-    const { id } = req.params
-    console.log(id)
-
+    const { sub } = req.params.tokenPayload
+    const accountData = req.body
+    const id = sub
     if (id) {
-      const accountObject = await account.getById(id)
+      const accountObject = await account.updateSchedule(id,accountData)
       console.log(accountObject)
       res.status(200).json({
-        id: accountObject.id,
-        name: accountObject.name,
-        lastname: accountObject.lastname,
-        degree: accountObject.degree,
-        degreeId: accountObject.degreeId,
-        profileImage: accountObject.profileImage,
-        description: accountObject.description,
-        role: accountObject.role,
-        evaluation: accountObject.evaluation,
-        specialities: accountObject.specialities,
-        address: accountObject.address,
-        Schedule: accountObject.Schedule
+       accountData
       })
     } else {
       res.status(404).json({

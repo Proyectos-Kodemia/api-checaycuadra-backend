@@ -110,7 +110,7 @@ const update = async (id, accountData) => {
     state,
     town
   }
-
+  console.log("la info de address",address)
   // Transformaciones de daysAvailable
   // const changeDaysToLowerCase = (days) => {
   //   days.map(day => day.toLowerCase())
@@ -161,7 +161,7 @@ const update = async (id, accountData) => {
     startHour,
     endHour
   }
-
+  console.log("aqui el Schedule",Schedule)
   // const updateObject = { }
 
   // Transformaciones de daysAvailable
@@ -196,6 +196,31 @@ const update = async (id, accountData) => {
   // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description }).exec()
 }
 
+const updateSchedule = async (id, accountData) => {
+  const accountInfo = await Account.model.findById(id).exec()
+  const costHour = accountInfo.Schedule.costHour
+
+  const {
+    daysAvailable,
+    startHour,
+    endHour
+  } = accountData
+
+  const Schedule = {
+    costHour,
+    daysAvailable,
+    startHour,
+    endHour
+  }
+  
+  if (Schedule) {
+    // console.log('entro 3')
+    return await Account.model.findByIdAndUpdate(id, { Schedule }).exec()
+    // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, Schedule }).exec()
+  }
+
+}
+
 const updateTokens = async (accountId, tokens) => {
   const accessToken = tokens.access_token
   const refreshToken = tokens.refresh_token
@@ -213,4 +238,4 @@ const getIdByToken = async (token) => {
   return null
 }
 
-module.exports = { getIdByToken, getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
+module.exports = { getIdByToken, getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateSchedule,updateTokens, create, logIn, authenticate }
