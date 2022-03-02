@@ -162,34 +162,38 @@ const update = async (id, accountData) => {
     endHour
   }
 
-  const updateObject = { }
+  // const updateObject = { }
+
   // Transformaciones de daysAvailable
   const changeDaysToLowerCase = (days) => {
     days.map(day => day.toLowerCase())
     console.log(days)
   }
-  // const updateObject = {}
   // const { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule } = accountData
   // const { street, interiorNumber, outdoorNumber, district, town, state, cp } = accountData.address
   // const { costHour, dateStart, dateEnd, rangeHours } = Schedule
 
-  //   if (address && Schedule) {
-  //     // console.log('entro 1')
-  //     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address, Schedule }).exec()
-  //   }
+  if (address && Schedule) {
+    // console.log('entro 1')
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, address, Schedule }).exec()
+    // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, address, Schedule }).exec()
+  }
 
-  //   if (address) {
-  //     // console.log('entro 2')
-  //     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, address }).exec()
-  //   }
+  if (address) {
+    // console.log('entro 2')
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, address }).exec()
+    // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, address }).exec()
+  }
 
-  //   if (Schedule) {
-  //     // console.log('entro 3')
-  //     return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation, Schedule }).exec()
-  //   }
+  if (Schedule) {
+    // console.log('entro 3')
+    return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description, Schedule }).exec()
+    // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description, Schedule }).exec()
+  }
 
-  //   // console.log('entro 4')
-  //   return await Account.model.findByIdAndUpdate(id, { username, name, lastname, password, email, telephone, degree, profileImage, description, role, evaluation }).exec()
+  // console.log('entro 4')
+  return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, description }).exec()
+  // return await Account.model.findByIdAndUpdate(id, { name, lastname, degree, profileImage, description }).exec()
 }
 
 const updateTokens = async (accountId, tokens) => {
@@ -198,4 +202,15 @@ const updateTokens = async (accountId, tokens) => {
 
   return await Account.model.findByIdAndUpdate(accountId, { accessToken, refreshToken }).exec()
 }
-module.exports = { getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
+
+const getIdByToken = async (token) => {
+  if (token !== null || token !== undefined) {
+    const base64String = token.split('.')[1]
+    const decodedValue = JSON.parse(Buffer.from(base64String,
+      'base64').toString('ascii'))
+    return decodedValue
+  }
+  return null
+}
+
+module.exports = { getIdByToken, getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }

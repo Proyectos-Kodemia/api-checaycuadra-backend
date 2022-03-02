@@ -108,6 +108,21 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.post('/verifyAuth', async (req, res, next) => {
+  try {
+    const { token } = req.headers
+    const idByToken = await account.getIdByToken(token)
+    res.status(201).json({
+      status: true,
+      message: 'Token Valid',
+      payload: idByToken.sub
+    })
+  } catch (err) {
+    console.log('error del post', err)
+    next(err)
+  }
+})
+
 // router.patch('/:id', async (req, res, next) => {
 //   try {
 //     const { id } = req.params
@@ -186,7 +201,7 @@ router.patch('/perfil', authHandler, async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.log('error del Patch', err)
+    console.log('error del Patch accountRouter', err)
     next(err)
   }
 })

@@ -28,15 +28,15 @@ router.post('/auth', async (req, res, next) => {
 // patch que recibe el code del front
 router.patch('/callback', authHandler, async (req, res, next) => {
   try {
-    console.log('entro a callback')
+    // console.log('entro a callback')
 
     const { sub } = req.params.tokenPayload
     console.log(sub)
     const code = req.body
-    console.log('aqui el code:', code)
+    // console.log('aqui el code:', code)
 
     const tokens = await google.getTokens(code)
-    console.log('los tokens:', tokens)
+    // console.log('los tokens:', tokens)
 
     const saveTokens = await account.updateTokens(sub, tokens)
 
