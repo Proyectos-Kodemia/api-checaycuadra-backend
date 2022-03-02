@@ -12,7 +12,6 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params
     // console.log(id)
 
-
     if (id) {
       const accountObject = await account.getById(id)
       const startHour = accountObject.Schedule.startHour
@@ -102,6 +101,21 @@ router.post('/', async (req, res, next) => {
       status: true,
       message: 'Account Created Succesfully',
       payload: _id
+    })
+  } catch (err) {
+    console.log('error del post', err)
+    next(err)
+  }
+})
+
+router.post('/verifyAuth', async (req, res, next) => {
+  try {
+    const { token } = req.headers
+    const idByToken = await account.getIdByToken(token)
+    res.status(201).json({
+      status: true,
+      message: 'Token Valid',
+      payload: idByToken.sub
     })
   } catch (err) {
     console.log('error del post', err)

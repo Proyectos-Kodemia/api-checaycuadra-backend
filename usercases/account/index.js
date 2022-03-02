@@ -162,7 +162,8 @@ const update = async (id, accountData) => {
     endHour
   }
 
-  const updateObject = { }
+  // const updateObject = { }
+
   // Transformaciones de daysAvailable
   const changeDaysToLowerCase = (days) => {
     days.map(day => day.toLowerCase())
@@ -201,4 +202,15 @@ const updateTokens = async (accountId, tokens) => {
 
   return await Account.model.findByIdAndUpdate(accountId, { accessToken, refreshToken }).exec()
 }
-module.exports = { getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
+
+const getIdByToken = async (token) => {
+  if (token !== null || token !== undefined) {
+    const base64String = token.split('.')[1]
+    const decodedValue = JSON.parse(Buffer.from(base64String,
+      'base64').toString('ascii'))
+    return decodedValue
+  }
+  return null
+}
+
+module.exports = { getIdByToken, getBySpecialities, get, getById, getByIdSchedule, getByEmail, getByName, update, updateTokens, create, logIn, authenticate }
