@@ -38,7 +38,15 @@ const createLink = async (id) => {
   const meetData = await Meeting.model.findById(idMeeting).exec()
 
   const { user, userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
-  const summary = `Cita para el servicio de ${title}`
+
+  // Ejemplo
+  // 'dateTime': '2015-05-28T09:00:00-07:00',
+  // 'timeZone': 'America/Los_Angeles',
+  // new Date(startDateTime).toLocaleDateString("en-US", { timeZone: 'America/Mexico_City' }),
+
+  const startMex = `${startDateTime}:00-06:00`
+  const endMex = `${endDateTime}:00-06:00`
+  const summary = `Cita para la consultoría de ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
   const account = userAccount.valueOf()
@@ -118,7 +126,7 @@ const getByUserAccount = async (id) => {
 
 const update = async (meetingId, meetingData) => {
   const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetingData
-  return await Meeting.model.findByIdAndUpdate(meetingId, { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment}).exec()
+  return await Meeting.model.findByIdAndUpdate(meetingId, { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment }).exec()
 }
 
 const del = async (meetingId) => {
