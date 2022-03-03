@@ -32,28 +32,31 @@ router.post('/account', async (req, res, next) => {
 router.post('/users', async (req, res, next) => {
   try {
     const { email, password } = req.body
-    // console.log(email, password)
+    // console.log('este es el email y password', email, password)
 
     const token = await user.logIn(email, password)
-    // console.log(token)
+    console.log('este es el token ', token)
     if (token) {
+      console.log('entro al token true')
       res.status(200).json({
         status: true,
         message: 'Log in Succesful',
         token: token
       })
     } else {
+      console.log('entro al token error')
       res.status(401).json({
         status: false,
         message: 'Autentication Failed, Password or Email invalid'
       })
     }
   } catch (error) {
-    res.status(401).json({
-      status: false,
-      message: 'Autentication Failed, Password or Email invalid'
-    })
-    next(error)
+    console.log('error en post ', error)
+    // res.status(401).json({
+    //   status: false,
+    //   message: 'Autentication Failed, Password or Email invalid'
+    // })
+    // next(error)
   }
 })
 

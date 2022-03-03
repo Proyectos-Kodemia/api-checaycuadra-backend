@@ -34,20 +34,26 @@ const authenticate = async (email, password) => {
 // Proceso LogIn de usuarios
 const logIn = async (email, password) => {
   const userObject = await getByEmail({ email })
-  const hash = userObject.password
-  const isValid = await encrypt.verifyPassword(password, hash)
+  console.log('esto es lo que retorno el usuario', userObject)
+  if (userObject) {
+    const hash = userObject.password
+    const isValid = await encrypt.verifyPassword(password, hash)
 
-  if (isValid) {
-    const payload = {
-      sub: userObject._id,
-      role: 'usuario'
+    if (isValid) {
+      const payload = {
+        sub: userObject._id,
+        role: 'usuario'
+      }
+      const token = await jwt.sign(payload)
+      // //console.log(token)
+      return token
+    } else {
+      // console.log('error desde login usuario usecase')
+      return false
     }
-    const token = await jwt.sign(payload)
-    // //console.log(token)
-    return token
   } else {
-    // console.log('error desde login usuario usecase')
-    return false
+    const user = false
+    return user
   }
 }
 
