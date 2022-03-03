@@ -38,7 +38,15 @@ const createLink = async (id) => {
   const meetData = await Meeting.model.findById(idMeeting).exec()
 
   const { user, userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetData
-  const summary = `Cita para el servicio de ${title}`
+  console.log(">>>startDateTime", new Date (startDateTime))
+  console.log(">>>endDateTime", new Date(endDateTime))
+
+  // Ejemplo
+  // 'dateTime': '2015-05-28T09:00:00-07:00',
+  // 'timeZone': 'America/Los_Angeles',
+  // new Date(startDateTime).toLocaleDateString("en-US", { timeZone: 'America/Mexico_City' }),
+
+  const summary = `Cita para la consultoría de ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
   const account = userAccount.valueOf()
@@ -74,11 +82,11 @@ const createLink = async (id) => {
       colorId: '7',
       start: {
         dateTime: new Date(startDateTime),
-        timezone: 'America/Mexico_City'
+        timeZone: 'America/Mexico_City'
       },
       end: {
         dateTime: new Date(endDateTime),
-        timezone: 'America/Mexico_City'
+        timeZone: 'America/Mexico_City'
       },
       attendees: [
         { email: email }
@@ -118,7 +126,7 @@ const getByUserAccount = async (id) => {
 
 const update = async (meetingId, meetingData) => {
   const { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment } = meetingData
-  return await Meeting.model.findByIdAndUpdate(meetingId, { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment}).exec()
+  return await Meeting.model.findByIdAndUpdate(meetingId, { userAccount, title, startDateTime, endDateTime, unit_price, quantity, statusPayment }).exec()
 }
 
 const del = async (meetingId) => {
