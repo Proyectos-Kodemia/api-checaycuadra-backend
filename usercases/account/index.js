@@ -95,7 +95,6 @@ const update = async (id, accountData,profileImage) => {
     precio: costHour,
     cedula: degreeId,
     formacion: degree,
-    especialidades: specialities,
     acercade: description,
     email: gmail,
     daysAvailable,
@@ -103,8 +102,10 @@ const update = async (id, accountData,profileImage) => {
     endHour
   } = accountData
 
-  console.log(name, lastname, state)
+ 
+  const specialities  = JSON.parse(accountData.especialidades)
 
+  console.log("array especialidades", specialities)
   const address = {
     cp,
     state,
