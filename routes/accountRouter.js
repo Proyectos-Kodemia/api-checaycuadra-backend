@@ -1,5 +1,7 @@
 const express = require('express')
 const moment = require('moment')
+const upload = require('../lib/multer')
+const storage = require('../usercases/storage')
 
 const account = require('../usercases/account')
 
@@ -173,10 +175,12 @@ router.delete('/:id', async (res, req, next) => {
   }
 })
 
-router.patch('/perfil', authHandler, async (req, res, next) => {
+router.patch('/perfil', authHandler,upload.single('imgfile'), async (req, res, next) => {
   console.log('entra al patch')
   const { sub } = req.params.tokenPayload
   console.log(sub)
+  console.log("toda la data account", req)
+
   try {
     const { sub } = req.params.tokenPayload
     console.log('id en patch perfil', sub)
@@ -184,14 +188,26 @@ router.patch('/perfil', authHandler, async (req, res, next) => {
     if (sub) {
       const accountData = req.body
 
+      
+      const fileData = req.body.imgfile
+      console.log (">>> el fileData",fileData)
+      const file = req.file
+
+      console.log(">>el file", file)
+
+      console.log("la imagen",fileData)
+      console.log("este file",file)
+      const profileImage = file.location
+
+
       console.log('recibiendo la data', accountData)
 
-      const accountUpdate = await account.update(sub, accountData)
+      const accountUpdate = await account.update(sub, accountData,profileImage)
       res.status(200).json({
         status: true,
         message: 'Update Successfully',
         payload: {
-          accountUpdate
+          accountUpdate,
         }
       })
     } else {
