@@ -46,7 +46,7 @@ const createLink = async (id) => {
   // 'timeZone': 'America/Los_Angeles',
   // new Date(startDateTime).toLocaleDateString("en-US", { timeZone: 'America/Mexico_City' }),
 
-  const summary = `Cita para la consultoría de ${title}`
+  const summary = `Cita para ${title}`
   const description = 'Cita creada por Checa y Cuadra'
   // Obtener refresh token de DB
   const account = userAccount.valueOf()

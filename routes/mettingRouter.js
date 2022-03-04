@@ -40,7 +40,8 @@ router.patch('/hangout-link', authHandler, async (req, res, next) => {
       status: true,
       message: 'Meeting link create succesfully',
       payload: {
-        idMeeting: idMeeting
+        idMeeting: idMeeting,
+        Meeting: meetingWithLink
       }
     })
   } catch (err) {

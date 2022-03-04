@@ -1,5 +1,7 @@
 const express = require('express')
 const moment = require('moment')
+const upload = require('../lib/multer')
+const storage = require('../usercases/storage')
 
 const account = require('../usercases/account')
 
@@ -22,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
         const schedulesAccount = []
         for (let i = 0; i < duration; i++) {
           schedulesAccount.push(
-              `${parseInt(startHour) + i}:00 - ${parseInt(startHour) + i + 1}:00`
+            `${parseInt(startHour) + i}:00 - ${parseInt(startHour) + i + 1}:00`
           )
         }
 
@@ -173,25 +175,43 @@ router.delete('/:id', async (res, req, next) => {
   }
 })
 
-router.patch('/perfil', authHandler, async (req, res, next) => {
+router.patch('/perfil', authHandler, upload.single('imgfile'), async (req, res, next) => {
   console.log('entra al patch')
   const { sub } = req.params.tokenPayload
   console.log(sub)
+  console.log("toda la data account", req.body)
+
   try {
     const { sub } = req.params.tokenPayload
     console.log('id en patch perfil', sub)
-
+    let profileImage = ''
     if (sub) {
       const accountData = req.body
+      const fileData = req.body.imgfile
+
+      if (fileData === 'undefined' ) {
+        profileImage = null
+      } else {
+        console.log(">>> el fileData", fileData)
+        const file = req.file
+
+        console.log(">>el file", file)
+
+        console.log("la imagen", fileData)
+        console.log("este file", file)
+        profileImage = file.location
+      }
+
+
 
       console.log('recibiendo la data', accountData)
 
-      const accountUpdate = await account.update(sub, accountData)
+      const accountUpdate = await account.update(sub, accountData, profileImage)
       res.status(200).json({
         status: true,
         message: 'Update Successfully',
         payload: {
-          accountUpdate
+          accountUpdate,
         }
       })
     } else {
